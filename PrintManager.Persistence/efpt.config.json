@@ -1,0 +1,74 @@
+﻿{
+   "CodeGenerationMode": 4,
+   "ContextClassName": "TESTPrintingManagementContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "TESTModels",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "TESTPrintManager.Persistence",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 2,
+   "SelectedToBeGenerated": 0,
+   "T4TemplatePath": null,
+   "Tables": [
+      {
+         "Name": "[dbo].[tbd_Branches]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbd_ConnectionTypes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbd_Employees]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbd_Installations]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbd_Printers]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbd_PrintJobNames]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbd_PrintSessions]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbd_Statuses]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "asus-sasha.PrintingManagement.dbo",
+   "UncountableWords": null,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDateOnlyTimeOnly": true,
+   "UseDbContextSplitting": true,
+   "UseDecimalDataAnnotationForSprocResult": true,
+   "UseFluentApiOnly": false,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": true,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": true,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": true,
+   "UsePrefixNavigationNaming": false,
+   "UseSchemaFolders": true,
+   "UseSchemaNamespaces": false,
+   "UseSpatial": false,
+   "UseT4": false
+}

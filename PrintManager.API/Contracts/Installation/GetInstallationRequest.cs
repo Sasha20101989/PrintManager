@@ -22,6 +22,6 @@ namespace PrintManager.API.Contracts.Installation
         /// Название филиала.
         /// </summary>
         [Required]
-        public required string Branch { get; init; }
+        public required string? Branch { get; init; }
     }
 }

@@ -12,11 +12,11 @@ public record class GetBranchRequest
     /// Номер страницы
     /// </summary>
     [DefaultValue(DefaultPaginationValues.BranchDefaultPage)]
-    public int Page { get; init; }
+    public int? Page { get; init; }
 
     /// <summary>
     /// Размер страницы (количество элементов на странице).
     /// </summary>
     [DefaultValue(DefaultPaginationValues.BranchDefaultPageSize)]
-    public int PageSize { get; init; }
+    public int? PageSize { get; init; }
 }

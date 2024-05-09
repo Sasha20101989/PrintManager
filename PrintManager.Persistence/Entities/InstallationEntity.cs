@@ -18,7 +18,7 @@ public partial class InstallationEntity
 
     public bool DefaultInstallation { get; set; }
 
-    public int PrinterOrder { get; set; }
+    public int? PrinterOrder { get; set; }
 
     [ForeignKey("BranchId")]
     [InverseProperty("Installations")]

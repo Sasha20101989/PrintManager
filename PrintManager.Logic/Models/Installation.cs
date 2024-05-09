@@ -12,5 +12,5 @@ public class Installation
 
     public bool DefaultInstallation { get; set; }
 
-    public int PrinterOrder { get; set; }
+    public int? PrinterOrder { get; set; }
 }

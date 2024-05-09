@@ -8,6 +8,18 @@ namespace PrintManager.Persistence.Repositories;
 
 public class InstallationRepository(PrintingManagementContext context, IMapper mapper) : IInstallationStore
 {
+    public async Task<Installation> CreateAsync(Installation installation)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task DeleteAsync(int id)
+    {
+        await context.Installations
+            .Where(i => i.InstallationId == id)
+            .ExecuteDeleteAsync();
+    }
+
     public async Task<Installation?> GetByIdAsync(int id)
     {
         InstallationEntity? installation = await context.Installations

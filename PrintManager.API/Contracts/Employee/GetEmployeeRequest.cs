@@ -12,11 +12,11 @@ public record class GetEmployeeRequest
     /// Номер страницы
     /// </summary>
     [DefaultValue(DefaultPaginationValues.EmployeeDefaultPage)]
-    public int Page { get; init; }
+    public int? Page { get; init; }
 
     /// <summary>
     /// Размер страницы (количество элементов на странице).
     /// </summary>
     [DefaultValue(DefaultPaginationValues.EmployeeDefaultPageSize)]
-    public int PageSize { get; init; }
+    public int? PageSize { get; init; }
 }

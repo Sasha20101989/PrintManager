@@ -34,6 +34,21 @@
             Размер страницы (количество элементов на странице).
             </summary>
         </member>
+        <member name="P:PrintManager.API.Contracts.Installation.GetInstallationRequest.Page">
+            <summary>
+            Номер страницы
+            </summary>
+        </member>
+        <member name="P:PrintManager.API.Contracts.Installation.GetInstallationRequest.PageSize">
+            <summary>
+            Размер страницы (количество элементов на странице).
+            </summary>
+        </member>
+        <member name="P:PrintManager.API.Contracts.Installation.GetInstallationRequest.Branch">
+            <summary>
+            Название филиала.
+            </summary>
+        </member>
         <member name="T:PrintManager.API.Contracts.Printer.GetPrinterRequest">
             <summary>
             Запрос на получение списка принтеров.
@@ -79,6 +94,11 @@
             <param name="employeeService">Сервис для работы с работниками.</param>
             <param name="request">Запрос на получение списка работников с пагинацией.</param>
             <returns>Результат выполнения запроса с данными о работниках.</returns>
+        </member>
+        <member name="T:PrintManager.API.Controllers.InstallationController">
+            <summary>
+            Контроллер для управления инсталяциями.
+            </summary>
         </member>
         <member name="T:PrintManager.API.Controllers.PrinterController">
             <summary>

@@ -2,6 +2,7 @@
 using PrintManager.API.Contracts.Branch;
 using PrintManager.Applpication.Interfaces;
 using PrintManager.Logic.Models;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace PrintManager.API.Controllers
 {
@@ -19,6 +20,8 @@ namespace PrintManager.API.Controllers
         /// <param name="request">Запрос на получение филиалов.</param>
         /// <returns>Список филиалов.</returns>
         [HttpGet]
+        [SwaggerResponse(StatusCodes.Status200OK)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> Index(
             [FromServices] IBranchService branchService,
             [FromQuery] GetBranchRequest request)

@@ -20,7 +20,7 @@ public class PrinterRepository(PrintingManagementContext context, IMapper mapper
         }
 
         return await printersQuery
-            .Select(p => Printer.Create(p.PrinterId, p.PrinterName, p.ConnectionTypeId, p.Macaddress, p.DefaultPrinter))
+            .Select(p => mapper.Map<Printer>(p))
             .ToListAsync();
     }
 
@@ -38,7 +38,7 @@ public class PrinterRepository(PrintingManagementContext context, IMapper mapper
         return await printersQuery
             .Skip(skip)
             .Take(pageSize)
-            .Select(p => Printer.Create(p.PrinterId, p.PrinterName, p.ConnectionTypeId, p.Macaddress, p.DefaultPrinter))
+            .Select(p => mapper.Map<Printer>(p))
             .ToListAsync();
     }
 }

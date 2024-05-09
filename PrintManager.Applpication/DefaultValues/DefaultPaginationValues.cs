@@ -8,5 +8,7 @@
         public const int PrinterDefaultPageSize = 50;
         public const int BranchDefaultPage = 1;
         public const int BranchDefaultPageSize = 50;
+        public const int InstallationDefaultPage = 1;
+        public const int InstallationDefaultPageSize = 50;
     }
 }

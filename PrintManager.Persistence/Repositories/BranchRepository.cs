@@ -11,7 +11,7 @@ public class BranchRepository(PrintingManagementContext context, IMapper mapper)
     {
         IReadOnlyList<Branch> branches = await context.Branches
             .AsNoTracking()
-            .Select(b => Branch.Create(b.BranchId, b.BranchName, b.Location))
+            .Select(b => mapper.Map<Branch>(b))
             .ToListAsync();
 
         return branches;
@@ -23,7 +23,7 @@ public class BranchRepository(PrintingManagementContext context, IMapper mapper)
             .AsNoTracking()
             .Skip(skip)
             .Take(pageSize)
-            .Select(b => Branch.Create(b.BranchId, b.BranchName, b.Location))
+            .Select(b => mapper.Map<Branch>(b))
             .ToListAsync();
     }
 }

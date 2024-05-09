@@ -2,21 +2,9 @@
 
 public class Branch
 {
-    private Branch(int id, string name, string? location)
-    {
-        Id = id;
-        Name = name;
-        Location = location;
-    }
+    public int BranchId { get; set; }
 
-    public int Id { get; private set; }
+    public string? BranchName { get; set; }
 
-    public string Name { get; private set; }
-
-    public string? Location { get; private set; }
-
-    public static Branch Create(int id, string name, string? location)
-    {
-        return new Branch(id, name, location);
-    }
+    public string? Location { get; set; }
 }

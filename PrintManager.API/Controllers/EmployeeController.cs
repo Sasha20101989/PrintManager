@@ -2,6 +2,7 @@
 using PrintManager.API.Contracts.Employee;
 using PrintManager.Applpication.Interfaces;
 using PrintManager.Logic.Models;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace PrintManager.API.Controllers
 {
@@ -19,6 +20,8 @@ namespace PrintManager.API.Controllers
         /// <param name="request">Запрос на получение списка работников с пагинацией.</param>
         /// <returns>Результат выполнения запроса с данными о работниках.</returns>
         [HttpGet]
+        [SwaggerResponse(StatusCodes.Status200OK)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> Index(
             [FromServices] IEmployeeService employeeService,
             [FromQuery] GetEmployeeRequest request)

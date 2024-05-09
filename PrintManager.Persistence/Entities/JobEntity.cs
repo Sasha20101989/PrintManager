@@ -1,37 +1,34 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PrintManager.Persistence.Entities;
 
-[Table("tbd_PrintSessions")]
-public partial class PrintSessionEntity
+[Table("tbd_Jobs")]
+public partial class JobEntity
 {
     [Key]
-    public int SessionId { get; set; }
+    public int JobId { get; set; }
 
     public int PrinterId { get; set; }
 
     public int EmployeeId { get; set; }
 
-    public int PrintJobId { get; set; }
+    [StringLength(100)]
+    public string PrintJobName { get; set; } = null!;
 
     public int PagesPrinted { get; set; }
 
     public int StatusId { get; set; }
 
     [ForeignKey("EmployeeId")]
-    [InverseProperty("PrintSessions")]
+    [InverseProperty("Jobs")]
     public virtual EmployeeEntity Employee { get; set; } = null!;
 
-    [ForeignKey("PrintJobId")]
-    [InverseProperty("PrintSessions")]
-    public virtual PrintJobNameEntity PrintJob { get; set; } = null!;
-
     [ForeignKey("PrinterId")]
-    [InverseProperty("PrintSessions")]
+    [InverseProperty("Jobs")]
     public virtual PrinterEntity Printer { get; set; } = null!;
 
     [ForeignKey("StatusId")]
-    [InverseProperty("PrintSessions")]
+    [InverseProperty("Jobs")]
     public virtual StatusEntity Status { get; set; } = null!;
 }

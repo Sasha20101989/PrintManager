@@ -32,15 +32,15 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[tbd_Jobs]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[tbd_Printers]",
          "ObjectType": 0
       },
       {
          "Name": "[dbo].[tbd_PrintJobNames]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[tbd_PrintSessions]",
          "ObjectType": 0
       },
       {

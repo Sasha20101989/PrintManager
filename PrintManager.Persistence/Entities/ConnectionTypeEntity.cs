@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PrintManager.Persistence.Entities;
 
@@ -10,7 +10,7 @@ public partial class ConnectionTypeEntity
     public int ConnectionTypeId { get; set; }
 
     [StringLength(50)]
-    public string TypeName { get; set; } = null!;
+    public string ConnectionTypeName { get; set; } = null!;
 
     [InverseProperty("ConnectionType")]
     public virtual ICollection<PrinterEntity> Printers { get; set; } = [];

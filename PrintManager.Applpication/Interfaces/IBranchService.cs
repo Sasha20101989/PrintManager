@@ -5,5 +5,5 @@ namespace PrintManager.Applpication.Interfaces;
 
 public interface IBranchService
 {
-    Task<IReadOnlyList<Branch>> GetAllAsync();
+    Task<IReadOnlyList<Branch>> GetByPageAsync(int? page, int? pageSize);
 }

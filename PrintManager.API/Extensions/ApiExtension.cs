@@ -48,6 +48,12 @@ namespace PrintManager.API.Extensions
         {
             services.AddSwaggerGen(c =>
             {
+                var basePath = AppContext.BaseDirectory;
+
+                var xmlPath = Path.Combine(basePath, "PrintManagerAPI.xml");
+
+                c.IncludeXmlComments(xmlPath);
+
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "REST API PRINT MANAGER",
@@ -56,6 +62,10 @@ namespace PrintManager.API.Extensions
                     Contact = new OpenApiContact
                     {
                         Name = "Aleksander Felyugin"
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "Лицензия",
                     }
                 });
             });

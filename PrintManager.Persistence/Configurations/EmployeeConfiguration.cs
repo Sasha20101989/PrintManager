@@ -2,19 +2,25 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PrintManager.Persistence.Entities;
 
-namespace PrintManager.Persistence.Configurations
+namespace PrintManager.Persistence.Configurations;
+
+public partial class EmployeeConfiguration : IEntityTypeConfiguration<EmployeeEntity>
 {
-    public partial class EmployeeConfiguration : IEntityTypeConfiguration<EmployeeEntity>
+    public void Configure(EntityTypeBuilder<EmployeeEntity> entity)
     {
-        public void Configure(EntityTypeBuilder<EmployeeEntity> entity)
-        {
-            entity.HasKey(e => e.EmployeeId).HasName("PK__tbd_Empl__7AD04F11FB34F84E");
+        entity.HasKey(e => e.EmployeeId)
+            .HasName("PK__tbd_Empl__7AD04FF13F486E80");
 
-            entity.Property(e => e.EmployeeId).ValueGeneratedNever();
+        entity.Property(e => e.EmployeeId)
+            .ValueGeneratedNever();
 
-            OnConfigurePartial(entity);
-        }
+        entity.HasOne(d => d.Branch)
+            .WithMany(p => p.Employees)
+            .OnDelete(DeleteBehavior.ClientSetNull)
+            .HasConstraintName("FK_BranchID_Emp");
 
-        partial void OnConfigurePartial(EntityTypeBuilder<EmployeeEntity> entity);
+        OnConfigurePartial(entity);
     }
+
+    partial void OnConfigurePartial(EntityTypeBuilder<EmployeeEntity> entity);
 }

@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PrintManager.Persistence.Entities;
 
@@ -7,24 +7,19 @@ namespace PrintManager.Persistence.Entities;
 public partial class PrinterEntity
 {
     [Key]
+    [Column("PrinterID")]
     public int PrinterId { get; set; }
 
     [StringLength(100)]
-    public string Name { get; set; } = null!;
+    public string PrinterName { get; set; } = null!;
 
     public int ConnectionTypeId { get; set; }
 
     [Column("MACAddress")]
-    [StringLength(50)]
-    public string? Macaddress { get; set; }
+    [StringLength(17)]
+    public string? Macaddress { get; set; } = null!;
 
     public bool DefaultPrinter { get; set; }
-
-    public int BranchId { get; set; }
-
-    [ForeignKey("BranchId")]
-    [InverseProperty("Printers")]
-    public virtual BranchEntity Branch { get; set; } = null!;
 
     [ForeignKey("ConnectionTypeId")]
     [InverseProperty("Printers")]
@@ -34,5 +29,5 @@ public partial class PrinterEntity
     public virtual ICollection<InstallationEntity> Installations { get; set; } = [];
 
     [InverseProperty("Printer")]
-    public virtual ICollection<PrintSessionEntity> PrintSessions { get; set; } = [];
+    public virtual ICollection<JobEntity> Jobs { get; set; } = [];
 }

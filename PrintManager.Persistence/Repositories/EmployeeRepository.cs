@@ -11,9 +11,19 @@ public class EmployeeRepository(PrintingManagementContext context, IMapper mappe
     {
         IReadOnlyList<Employee> employees = await context.Employees
             .AsNoTracking()
-            .Select(b => Employee.Create(b.EmployeeId, b.Name))
+            .Select(b => Employee.Create(b.EmployeeId, b.EmployeeName, b.BranchId))
             .ToListAsync();
 
         return employees;
+    }
+
+    public async Task<IReadOnlyList<Employee>> GetByPageAsync(int skip, int pageSize)
+    {
+        return await context.Employees
+            .AsNoTracking()
+            .Skip(skip)
+            .Take(pageSize)
+            .Select(b => Employee.Create(b.EmployeeId, b.EmployeeName, b.BranchId))
+            .ToListAsync();
     }
 }

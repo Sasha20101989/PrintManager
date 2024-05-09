@@ -14,9 +14,7 @@ public partial class PrintingManagementContext(DbContextOptions<PrintingManageme
 
     public virtual DbSet<InstallationEntity> Installations { get; set; }
 
-    public virtual DbSet<PrintJobNameEntity> PrintJobNames { get; set; }
-
-    public virtual DbSet<PrintSessionEntity> PrintSessions { get; set; }
+    public virtual DbSet<JobEntity> Jobs { get; set; }
 
     public virtual DbSet<PrinterEntity> Printers { get; set; }
 
@@ -25,11 +23,9 @@ public partial class PrintingManagementContext(DbContextOptions<PrintingManageme
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new BranchConfiguration());
-        modelBuilder.ApplyConfiguration(new ConnectionTypeConfiguration());
         modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
         modelBuilder.ApplyConfiguration(new InstallationConfiguration());
-        modelBuilder.ApplyConfiguration(new PrintJobNameConfiguration());
-        modelBuilder.ApplyConfiguration(new PrintSessionConfiguration());
+        modelBuilder.ApplyConfiguration(new JobConfiguration());
         modelBuilder.ApplyConfiguration(new PrinterConfiguration());
         modelBuilder.ApplyConfiguration(new StatusConfiguration());
 

@@ -4,5 +4,6 @@ namespace PrintManager.Logic.Stores;
 
 public interface IPrinterStore
 {
-    Task<IReadOnlyList<Printer>> GetAllAsync(Enums.ConnectionType connectionType);
+    Task<IReadOnlyList<Printer>> GetAllAsync(string? connectionType = null);
+    Task<IReadOnlyList<Printer>> GetByPageAsync(int skip, int pageSize, string? connectionType = null);
 }

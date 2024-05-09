@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PrintManager.API</name>
+    </assembly>
+    <members>
+        <member name="T:PrintManager.API.Contracts.Branch.GetBranchRequest">
+            <summary>
+            Запрос на получение списка филиалов с возможностью пагинации.
+            </summary>
+        </member>
+        <member name="P:PrintManager.API.Contracts.Branch.GetBranchRequest.Page">
+            <summary>
+            Номер страницы
+            </summary>
+        </member>
+        <member name="P:PrintManager.API.Contracts.Branch.GetBranchRequest.PageSize">
+            <summary>
+            Размер страницы (количество элементов на странице).
+            </summary>
+        </member>
+        <member name="T:PrintManager.API.Contracts.Employee.GetEmployeeRequest">
+            <summary>
+            Запрос на получение списка работников с возможностью пагинации.
+            </summary>
+        </member>
+        <member name="P:PrintManager.API.Contracts.Employee.GetEmployeeRequest.Page">
+            <summary>
+            Номер страницы
+            </summary>
+        </member>
+        <member name="P:PrintManager.API.Contracts.Employee.GetEmployeeRequest.PageSize">
+            <summary>
+            Размер страницы (количество элементов на странице).
+            </summary>
+        </member>
+        <member name="T:PrintManager.API.Contracts.Printer.GetPrinterRequest">
+            <summary>
+            Запрос на получение списка принтеров.
+            </summary>
+        </member>
+        <member name="P:PrintManager.API.Contracts.Printer.GetPrinterRequest.ConnectionType">
+            <summary>
+            Тип подключения (local для локального, network для сетевого).
+            </summary>
+        </member>
+        <member name="P:PrintManager.API.Contracts.Printer.GetPrinterRequest.Page">
+            <summary>
+            Номер страницы
+            </summary>
+        </member>
+        <member name="P:PrintManager.API.Contracts.Printer.GetPrinterRequest.PageSize">
+            <summary>
+            Размер страницы (количество элементов на странице).
+            </summary>
+        </member>
+        <member name="T:PrintManager.API.Controllers.BranchController">
+            <summary>
+            Контроллер для управления филиалами.
+            </summary>
+        </member>
+        <member name="M:PrintManager.API.Controllers.BranchController.Index(PrintManager.Applpication.Interfaces.IBranchService,PrintManager.API.Contracts.Branch.GetBranchRequest)">
+            <summary>
+            Получает список филиалов с возможностью пагинации.
+            </summary>
+            <param name="branchService">Сервис для работы с филиалами.</param>
+            <param name="request">Запрос на получение филиалов.</param>
+            <returns>Список филиалов.</returns>
+        </member>
+        <member name="T:PrintManager.API.Controllers.EmployeeController">
+            <summary>
+            Контроллер для управления работниками.
+            </summary>
+        </member>
+        <member name="M:PrintManager.API.Controllers.EmployeeController.Index(PrintManager.Applpication.Interfaces.IEmployeeService,PrintManager.API.Contracts.Employee.GetEmployeeRequest)">
+            <summary>
+            Получение списка работников с возможностью пагинации.
+            </summary>
+            <param name="employeeService">Сервис для работы с работниками.</param>
+            <param name="request">Запрос на получение списка работников с пагинацией.</param>
+            <returns>Результат выполнения запроса с данными о работниках.</returns>
+        </member>
+        <member name="T:PrintManager.API.Controllers.PrinterController">
+            <summary>
+            Контроллер для управления принтерами.
+            </summary>
+        </member>
+        <member name="M:PrintManager.API.Controllers.PrinterController.Index(PrintManager.Applpication.Interfaces.IPrinterService,PrintManager.API.Contracts.Printer.GetPrinterRequest)">
+            <summary>
+            Получение принтеров с указанным типом подключения
+            </summary>
+        </member>
+        <member name="T:PrintManager.API.Middlewares.GlobalExceptionHandlingMiddleware">
+            <summary>
+            Middleware для обработки глобальных исключений и возврата соответствующего ответа клиенту.
+            </summary>
+        </member>
+        <member name="M:PrintManager.API.Middlewares.GlobalExceptionHandlingMiddleware.#ctor(Microsoft.Extensions.Logging.ILogger{PrintManager.API.Middlewares.GlobalExceptionHandlingMiddleware})">
+            <summary>
+            Middleware для обработки глобальных исключений и возврата соответствующего ответа клиенту.
+            </summary>
+        </member>
+        <member name="M:PrintManager.API.Middlewares.GlobalExceptionHandlingMiddleware.InvokeAsync(Microsoft.AspNetCore.Http.HttpContext,Microsoft.AspNetCore.Http.RequestDelegate)">
+            <summary>
+            Обрабатывает запрос и вызывает следующий делегат запроса в цепочке middleware.
+            </summary>
+            <param name="context">Объект HttpContext, представляющий текущий запрос и ответ.</param>
+            <param name="next">Следующий делегат запроса в цепочке middleware.</param>
+        </member>
+    </members>
+</doc>

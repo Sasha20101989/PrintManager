@@ -1,29 +1,26 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PrintManager.Persistence.Entities;
-using System.Data;
 
-namespace PrintManager.Persistence.Configurations
+namespace PrintManager.Persistence.Configurations;
+
+public partial class PrinterConfiguration : IEntityTypeConfiguration<PrinterEntity>
 {
-    public partial class PrinterConfiguration : IEntityTypeConfiguration<PrinterEntity>
+    public void Configure(EntityTypeBuilder<PrinterEntity> entity)
     {
-        public void Configure(EntityTypeBuilder<PrinterEntity> entity)
-        {
-            entity.HasKey(e => e.PrinterId).HasName("PK__tbd_Prin__D452AAC1AC74877C");
+        entity.HasKey(e => e.PrinterId)
+            .HasName("PK__tmp_ms_x__D452AB2148AEC640");
 
-            entity.Property(e => e.PrinterId).ValueGeneratedNever();
+        entity.Property(e => e.PrinterId)
+            .ValueGeneratedNever();
 
-            entity.HasOne(d => d.Branch).WithMany(p => p.Printers)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__tbd_Print__Branc__3B75D760");
+        entity.HasOne(d => d.ConnectionType)
+            .WithMany(p => p.Printers)
+            .OnDelete(DeleteBehavior.ClientSetNull)
+            .HasConstraintName("FK_tbd_Printers_tbd_ConnectionTypes");
 
-            entity.HasOne(d => d.ConnectionType).WithMany(p => p.Printers)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__tbd_Print__Conne__3C69FB99");
-
-            OnConfigurePartial(entity);
-        }
-
-        partial void OnConfigurePartial(EntityTypeBuilder<PrinterEntity> entity);
+        OnConfigurePartial(entity);
     }
+
+    partial void OnConfigurePartial(EntityTypeBuilder<PrinterEntity> entity);
 }

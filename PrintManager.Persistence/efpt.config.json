@@ -40,10 +40,6 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[tbd_PrintJobNames]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[tbd_Statuses]",
          "ObjectType": 0
       }
@@ -55,7 +51,7 @@
    "UseDateOnlyTimeOnly": true,
    "UseDbContextSplitting": true,
    "UseDecimalDataAnnotationForSprocResult": true,
-   "UseFluentApiOnly": false,
+   "UseFluentApiOnly": true,
    "UseHandleBars": false,
    "UseHierarchyId": false,
    "UseInflector": true,

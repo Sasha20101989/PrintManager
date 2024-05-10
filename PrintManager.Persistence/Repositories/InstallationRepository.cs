@@ -10,7 +10,13 @@ public class InstallationRepository(PrintingManagementContext context, IMapper m
 {
     public async Task<Installation> CreateAsync(Installation installation)
     {
-        throw new NotImplementedException();
+        InstallationEntity installationEntity = mapper.Map<InstallationEntity>(installation);
+
+        await context.Installations.AddAsync(installationEntity);
+
+        await context.SaveChangesAsync();
+
+        return mapper.Map<Installation>(installationEntity);
     }
 
     public async Task DeleteAsync(int id)
@@ -29,6 +35,14 @@ public class InstallationRepository(PrintingManagementContext context, IMapper m
         return mapper.Map<Installation>(installation);
     }
 
+    public async Task<int?> GetMaxPrinterOrderByInstallationNameAsync(string installationName)
+    {
+        return await context.Installations
+            .AsNoTracking()
+            .Where(i => installationName == i.InstallationName)
+            .MaxAsync(inst => inst.PrinterOrder);
+    }
+
     public async Task<IReadOnlyList<Installation>> GetByPageAsync(int skip, int pageSize, string branchName)
     {
         IQueryable<InstallationEntity> installationsQuery = context.Installations
@@ -45,5 +59,18 @@ public class InstallationRepository(PrintingManagementContext context, IMapper m
             .Take(pageSize)
             .Select(p => mapper.Map<Installation>(p))
             .ToListAsync();
+    }
+
+    public async Task<Installation?> GetByProperties(string installationName, int branchId, int printerId, int printerOrder)
+    {
+        InstallationEntity? installation = await context.Installations
+            .AsNoTracking()
+            .FirstOrDefaultAsync(i =>
+               installationName == i.InstallationName &&
+               branchId == i.BranchId &&
+               printerId == i.PrinterId &&
+               printerOrder == i.PrinterOrder);
+
+        return mapper.Map<Installation>(installation);
     }
 }

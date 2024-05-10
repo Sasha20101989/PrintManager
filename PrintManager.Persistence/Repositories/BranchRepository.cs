@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using PrintManager.Logic.Models;
 using PrintManager.Logic.Stores;
+using PrintManager.Persistence.Entities;
 
 namespace PrintManager.Persistence.Repositories;
 
@@ -15,6 +16,15 @@ public class BranchRepository(PrintingManagementContext context, IMapper mapper)
             .ToListAsync();
 
         return branches;
+    }
+
+    public async Task<Branch?> GetByIdAsync(int branchId)
+    {
+        BranchEntity? branch = await context.Branches
+            .AsNoTracking()
+            .FirstOrDefaultAsync(b => b.BranchId == branchId);
+
+        return mapper.Map<Branch>(branch);
     }
 
     public async Task<IReadOnlyList<Branch>> GetByPageAsync(int skip, int pageSize)

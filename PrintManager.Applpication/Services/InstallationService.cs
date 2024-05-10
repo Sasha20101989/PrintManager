@@ -5,20 +5,38 @@ using PrintManager.Logic.Stores;
 
 namespace PrintManager.Applpication.Services;
 
-public class InstallationService(IInstallationStore installationStore) : IInstallationService
+public class InstallationService(IInstallationStore installationStore, IBranchService branchService) : IInstallationService
 {
-    public async Task<Installation> CreateAsync(string installationName, int branchId, int printerId, bool defaultInstallation, int? printerOrder)
+    public async Task<Installation> CreateAsync(string installationName, Branch branch, Printer printer, bool defaultInstallation, int? printerOrder)
     {
-        Installation installation = new()
+        if (printerOrder.HasValue)
+        {
+            //bool isOrderExists = await installationStore.IsPrinterOrderExistsAsync(branchId, printerOrder.Value);
+
+            //if (isOrderExists)
+            //{
+            //    throw new ArgumentException($"Installation with printer order {printerOrder} already exists in branch {branch.BranchName}.");
+            //}
+        }
+        else
+        {
+            int? maxCurrentOrder = await installationStore.GetMaxPrinterOrderByInstallationNameAsync(installationName);
+
+            //int nextOrder = await installationStore.GetNextPrinterOrderAsync(branch.BranchId);
+
+            printerOrder = maxCurrentOrder is null ? 1 : maxCurrentOrder + 1;
+        }
+
+        Installation newInstallation = new()
         {
             InstallationName = installationName,
-            BranchId = branchId,
-            PrinterId = printerId,
+            BranchId = branch.BranchId,
+            PrinterId = printer.PrinterId,
             DefaultInstallation = defaultInstallation,
             PrinterOrder = printerOrder
         };
 
-        return await installationStore.CreateAsync(installation);
+        return await installationStore.CreateAsync(newInstallation);
     }
 
     public async Task DeleteAsync(int id)
@@ -38,5 +56,10 @@ public class InstallationService(IInstallationStore installationStore) : IInstal
     public async Task<Installation?> GetByIdAsync(int id)
     {
         return await installationStore.GetByIdAsync(id);
+    }
+
+    public async Task<Installation?> GetByProperties(string installanionName, int branchId, int printerId, int printerOrder)
+    {
+        return await installationStore.GetByProperties(installanionName, branchId, printerId, printerOrder);
     }
 }

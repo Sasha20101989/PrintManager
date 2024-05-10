@@ -13,9 +13,9 @@ namespace PrintManager.API.Contracts.Installation
         [Required]
         public required int PrinterId { get; init; }
 
-        public int? PrinterOrder { get; init; }
-
         [Required]
         public required bool DefaultInstallation { get; init; }
+
+        public int? PrinterOrder { get; init; }
     }
 }

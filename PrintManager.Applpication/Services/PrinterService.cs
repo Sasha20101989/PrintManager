@@ -7,6 +7,11 @@ namespace PrintManager.Applpication.Services;
 
 public class PrinterService(IPrinterStore printerStore) : IPrinterService
 {
+    public async Task<Printer?> GetByIdAsync(int printerId)
+    {
+        return await printerStore.GetByIdAsync(printerId);
+    }
+
     public async Task<IReadOnlyList<Printer>> GetByPageAsync(int ? page, int? pageSize, string? connectionType = null)
     {
         int pageNumber = page.HasValue && page > 0 ? page.Value : DefaultPaginationValues.PrinterDefaultPage;

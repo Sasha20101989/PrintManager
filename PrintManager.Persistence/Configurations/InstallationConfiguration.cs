@@ -12,7 +12,7 @@ public partial class InstallationConfiguration : IEntityTypeConfiguration<Instal
             .HasName("PK__tbd_Inst__5F69B614F3601FB9");
 
         entity.Property(e => e.InstallationId)
-            .ValueGeneratedNever();
+            .ValueGeneratedOnAdd();
 
         entity.HasOne(d => d.Branch)
             .WithMany(p => p.Installations)

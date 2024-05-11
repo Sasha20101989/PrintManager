@@ -1,6 +1,5 @@
 ﻿using PrintManager.Applpication.DefaultValues;
 using PrintManager.Applpication.Interfaces;
-using PrintManager.Logic.Enums;
 using PrintManager.Logic.Models;
 using PrintManager.Logic.Stores;
 
@@ -8,6 +7,11 @@ namespace PrintManager.Applpication.Services;
 
 public class PrinterService(IPrinterStore printerStore) : IPrinterService
 {
+    public Printer? GetById(int printerId)
+    {
+        return printerStore.GetById(printerId);
+    }
+
     public async Task<Printer?> GetByIdAsync(int printerId)
     {
         return await printerStore.GetByIdAsync(printerId);

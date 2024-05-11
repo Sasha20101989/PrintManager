@@ -6,7 +6,13 @@ namespace PrintManager.Applpication.Interfaces
     {
         void SetInstallations(IReadOnlyList<Installation> installations);
 
+        void SetInstallation(Installation installation);
+
         IReadOnlyList<Installation> GetInstallations();
+
+        IReadOnlyList<Installation>? GetInstallationsByPage(int skip, int size, string branchName);
+
+        Installation? GetInstallationById(int id);     
 
         void RemoveInstallations();
     }

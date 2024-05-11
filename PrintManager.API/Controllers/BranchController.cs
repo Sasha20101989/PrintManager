@@ -1,31 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PrintManager.API.Contracts.Branch;
+using PrintManager.Applpication.Contracts.Branch;
 using PrintManager.Applpication.Interfaces;
 using PrintManager.Logic.Models;
 using System.Net;
 
-namespace PrintManager.API.Controllers
+namespace PrintManager.API.Controllers;
+
+/// <summary>
+/// Контроллер для управления филиалами.
+/// </summary>
+[ApiController]
+[Route("api/[controller]")]
+public class BranchController : ControllerBase
 {
     /// <summary>
-    /// Контроллер для управления филиалами.
+    /// Получает список филиалов с возможностью пагинации.
     /// </summary>
-    [ApiController]
-    [Route("api/[controller]")]
-    public class BranchController : ControllerBase
+    [HttpGet]
+    [ProducesResponseType(typeof(IReadOnlyList<Branch>), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> Index(
+        [FromServices] IBranchService branchService,
+        [FromQuery] GetBranchRequest request)
     {
-        /// <summary>
-        /// Получает список филиалов с возможностью пагинации.
-        /// </summary>
-        [HttpGet]
-        [ProducesResponseType(typeof(IReadOnlyList<Branch>), (int)HttpStatusCode.OK)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Index(
-            [FromServices] IBranchService branchService,
-            [FromQuery] GetBranchRequest request)
-        {
-            IReadOnlyList<Branch> branches = await branchService.GetByPageAsync(request.Page, request.PageSize);
-
-            return Ok(branches);
-        }
+        return Ok(await branchService.GetByPageAsync(request.Page, request.PageSize));
     }
 }

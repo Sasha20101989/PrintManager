@@ -1,9 +1,13 @@
 ﻿using Microsoft.OpenApi.Models;
 using PrintManager.API.Middlewares;
+using PrintManager.Applpication.Filters.Installation;
+using PrintManager.Applpication.Filters.Branch;
 using PrintManager.Applpication.Interfaces;
 using PrintManager.Applpication.Services;
 using PrintManager.Logic.Stores;
 using PrintManager.Persistence.Repositories;
+using PrintManager.Applpication.Filters.Printer;
+using PrintManager.Applpication.Filters.Job;
 
 namespace PrintManager.API.Extensions
 {
@@ -16,9 +20,9 @@ namespace PrintManager.API.Extensions
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IInstallationService, InstallationService>();
             services.AddScoped<IPrinterService, PrinterService>();
-            services.AddScoped<IPrintJobNameService, PrintJobNameService>();
-            services.AddScoped<IPrintSessionService, PrintSessionService>();
+            services.AddScoped<IJobService, JobService>();
             services.AddScoped<IStatusService, StatusService>();
+            services.AddScoped<ICSVService, CSVService>();
 
             return services;
         }
@@ -37,8 +41,7 @@ namespace PrintManager.API.Extensions
             services.AddScoped<IEmployeeStore, EmployeeRepository>();
             services.AddScoped<IInstallationStore, InstallationRepository>();
             services.AddScoped<IPrinterStore, PrinterRepository>();
-            services.AddScoped<IPrintJobNameStore, PrintJobNameRepository>();
-            services.AddScoped<IPrintSessionStore, PrintSessionRepository>();
+            services.AddScoped<IJobStore, JobRepository>();
             services.AddScoped<IStatusStore, StatusRepository>();
 
             return services;
@@ -47,6 +50,16 @@ namespace PrintManager.API.Extensions
         public static IServiceCollection AddCacheServices(this IServiceCollection services)
         {
             services.AddSingleton<IInstallationMemoryCache, InstallationMemoryCache>();
+
+            return services;
+        }
+
+        public static IServiceCollection AddFilters(this IServiceCollection services)
+        {
+            services.AddScoped<Installation_ValidateInstallationIdFilterAttribute>();
+            services.AddScoped<Branch_ValidateBranchIdFilterAttribute>();
+            services.AddScoped<Printer_ValidatePrinterIdFilterAttribute>();
+            services.AddScoped<Job_ValidateJobIdFilterAttribute>();
 
             return services;
         }

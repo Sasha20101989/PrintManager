@@ -18,6 +18,15 @@ public class BranchRepository(PrintingManagementContext context, IMapper mapper)
         return branches;
     }
 
+    public Branch? GetById(int branchId)
+    {
+        BranchEntity? branch = context.Branches
+             .AsNoTracking()
+             .FirstOrDefault(b => b.BranchId == branchId);
+
+        return mapper.Map<Branch>(branch);
+    }
+
     public async Task<Branch?> GetByIdAsync(int branchId)
     {
         BranchEntity? branch = await context.Branches

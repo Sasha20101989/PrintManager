@@ -16,5 +16,7 @@ public class Installation
 
     public int? PrinterOrder { get; set; }
 
-    public Branch? Branch { get; set; }
+    public virtual Branch Branch { get; set; } = null!;
+
+    public virtual Printer Printer { get; set; } = null!;
 }

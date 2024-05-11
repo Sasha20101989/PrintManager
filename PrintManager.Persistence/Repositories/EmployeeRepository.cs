@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using PrintManager.Logic.Models;
 using PrintManager.Logic.Stores;
+using PrintManager.Persistence.Entities;
 
 namespace PrintManager.Persistence.Repositories;
 
@@ -15,6 +16,16 @@ public class EmployeeRepository(PrintingManagementContext context, IMapper mappe
             .ToListAsync();
 
         return employees;
+    }
+
+    public async Task<Employee?> GetByIdAsync(int employeeId)
+    {
+        EmployeeEntity? employee = await context.Employees
+            .AsNoTracking()
+            .Include(e => e.Branch)
+            .FirstOrDefaultAsync(i => i.EmployeeId == employeeId);
+
+        return mapper.Map<Employee>(employee);
     }
 
     public async Task<IReadOnlyList<Employee>> GetByPageAsync(int skip, int pageSize)

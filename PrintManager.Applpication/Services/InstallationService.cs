@@ -1,16 +1,24 @@
-﻿using Microsoft.Extensions.Caching.Memory;
-using PrintManager.Applpication.DefaultValues;
+﻿using PrintManager.Applpication.DefaultValues;
 using PrintManager.Applpication.Interfaces;
 using PrintManager.Logic.Models;
 using PrintManager.Logic.Stores;
-using System.Linq;
 
 namespace PrintManager.Applpication.Services;
 
-public class InstallationService(IInstallationStore installationStore, IInstallationMemoryCache installationMemoryCache) : IInstallationService
+public class InstallationService(
+    IInstallationStore installationStore, 
+    IInstallationMemoryCache installationMemoryCache,
+    IBranchService branchService,
+    IPrinterService printerService) : IInstallationService
 {
-    public async Task<Installation> CreateAsync(string installationName, Branch branch, Printer printer, bool defaultInstallation, int? printerOrder)
+    public async Task<Installation> CreateAsync(string installationName, int branchId, int printerId, bool defaultInstallation, int? printerOrder)
     {
+        Branch? branch = await branchService.GetByIdAsync(branchId) ?? 
+            throw new ArgumentNullException($"{nameof(Branch)} with id {branchId} not found.");
+
+        Printer? printer = await printerService.GetByIdAsync(printerId) ??
+            throw new ArgumentNullException($"{nameof(Printer)} with id {printerId} not found.");
+
         if (!printerOrder.HasValue)
         {
             bool isFirstInstallation = await installationStore.IsFirstInstallationInBranchAsync(installationName, branch.BranchId);
@@ -36,9 +44,9 @@ public class InstallationService(IInstallationStore installationStore, IInstalla
 
             printerOrder = maxCurrentOrder is null ? 1 : maxCurrentOrder + 1;
 
-            if (printerOrder > 255)
+            if (printerOrder > DefaultPrinterValues.PrinterMaxOrder)
             {
-                throw new ArgumentOutOfRangeException(nameof(printerOrder), "The printer order exceeds the maximum allowed value (255).");
+                throw new ArgumentOutOfRangeException(nameof(printerOrder), $"The printer order exceeds the maximum allowed value ({DefaultPrinterValues.PrinterMaxOrder}).");
             }
         }
 
@@ -83,31 +91,53 @@ public class InstallationService(IInstallationStore installationStore, IInstalla
         installationMemoryCache.RemoveInstallations();
     }
 
-    public async Task<IReadOnlyList<Installation>> GetByBranchNameAsync(string branchName, int? page, int? pageSize)
+    public async Task<IReadOnlyList<Installation>> GetByBranchNameAsync(string branchName, int? page = null, int? pageSize = null)
     {
         int pageNumber = page.HasValue && page > 0 ? page.Value : DefaultPaginationValues.InstallationDefaultPage;
         int size = pageSize.HasValue && pageSize > 0 ? pageSize.Value : DefaultPaginationValues.InstallationDefaultPageSize;
         int skip = (pageNumber - 1) * size;
 
-        IEnumerable<Installation> cachedInstallations = installationMemoryCache
-            .GetInstallations()
-            .Where(p => p.Branch?.BranchName == branchName)
-            .Skip(skip)
-            .Take(size);
+        IReadOnlyList<Installation>? cachedInstallations = installationMemoryCache.GetInstallationsByPage(skip, size, branchName);
 
         if (cachedInstallations is not null)
         {
-            return cachedInstallations.ToList();
+            return cachedInstallations;
         }
 
-        return await installationStore.GetByPageAsync(skip, size, branchName);
+        IReadOnlyList<Installation> installations = await installationStore.GetByPageAsync(skip, size, branchName);
+
+        installationMemoryCache.SetInstallations(installations);
+
+        return installations;
+    }
+
+
+    public async Task<Installation> GetDefaultInstallationByBranchNameAsync(string branchName)
+    {
+        IReadOnlyList<Installation> installations = await GetByBranchNameAsync(branchName);
+
+        Installation defaultInstallation = installations.FirstOrDefault(i => i.DefaultInstallation) ??
+            throw new ArgumentNullException($"{nameof(Installation.DefaultInstallation)} in {nameof(Branch)} ({branchName}) not found in {nameof(Installation)}s.");
+
+        return defaultInstallation;
+    }
+
+
+    public Installation? GetById(int id)
+    {
+        Installation? cachedInstallation = installationMemoryCache.GetInstallationById(id);
+
+        if (cachedInstallation is not null)
+        {
+            return cachedInstallation;
+        }
+
+        return installationStore.GetById(id);
     }
 
     public async Task<Installation?> GetByIdAsync(int id)
     {
-        Installation? cachedInstallation = installationMemoryCache
-            .GetInstallations()
-            .FirstOrDefault(i => i.InstallationId == id);
+        Installation? cachedInstallation = installationMemoryCache.GetInstallationById(id);
 
         if (cachedInstallation is not null)
         {

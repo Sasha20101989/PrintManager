@@ -1,7 +1,7 @@
 ﻿using PrintManager.Applpication.Attributes;
 using System.ComponentModel.DataAnnotations;
 
-namespace PrintManager.API.Contracts.Installation
+namespace PrintManager.Applpication.Contracts.Installation
 {
     public record CreateInstallationRequest
     {

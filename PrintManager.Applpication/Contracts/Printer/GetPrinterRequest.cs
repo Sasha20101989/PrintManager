@@ -2,7 +2,7 @@
 using PrintManager.Logic.Enums;
 using System.ComponentModel;
 
-namespace PrintManager.API.Contracts.Printer;
+namespace PrintManager.Applpication.Contracts.Printer;
 
 /// <summary>
 /// Запрос на получение списка принтеров.

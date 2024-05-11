@@ -1,7 +1,7 @@
 ﻿using PrintManager.Applpication.DefaultValues;
 using System.ComponentModel;
 
-namespace PrintManager.API.Contracts.Employee;
+namespace PrintManager.Applpication.Contracts.Employee;
 
 /// <summary>
 /// Запрос на получение списка работников с возможностью пагинации.

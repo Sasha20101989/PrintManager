@@ -1,7 +1,7 @@
 ﻿using PrintManager.Applpication.DefaultValues;
 using System.ComponentModel;
 
-namespace PrintManager.API.Contracts.Branch;
+namespace PrintManager.Applpication.Contracts.Branch;
 
 /// <summary>
 /// Запрос на получение списка филиалов с возможностью пагинации.

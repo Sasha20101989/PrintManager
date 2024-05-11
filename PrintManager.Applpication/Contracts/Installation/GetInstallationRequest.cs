@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace PrintManager.API.Contracts.Installation
+namespace PrintManager.Applpication.Contracts.Installation
 {
     public record GetInstallationRequest
     {

@@ -10,6 +10,8 @@ public interface IInstallationStore
 
     Task<Installation?> GetByIdAsync(int id);
 
+    Installation? GetById(int id);
+
     Task<IReadOnlyList<Installation>> GetByPageAsync(int skip, int pageSize, string branchName);
 
     Task<Installation?> GetByProperties(string installationName, int branchId, int printerId, int printerOrder);

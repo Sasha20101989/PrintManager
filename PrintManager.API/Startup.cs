@@ -27,6 +27,7 @@ namespace PrintManager.API
             services.AddCacheServices();
             services.AddServices();
             services.AddRepositories();
+            services.AddFilters();
 
             services.AddMemoryCache();
 

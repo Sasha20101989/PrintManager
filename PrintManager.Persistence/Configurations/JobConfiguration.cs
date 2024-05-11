@@ -12,7 +12,7 @@ public partial class JobConfiguration : IEntityTypeConfiguration<JobEntity>
             .HasName("PK__tbd_Jobs__C9F492902B921EEB");
 
         entity.Property(e => e.JobId)
-            .ValueGeneratedNever();
+            .ValueGeneratedOnAdd();
 
         entity.HasOne(d => d.Employee)
             .WithMany(p => p.Jobs)

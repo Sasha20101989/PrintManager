@@ -35,6 +35,16 @@ public class InstallationRepository(PrintingManagementContext context, IMapper m
         return mapper.Map<Installation>(installation);
     }
 
+
+    public Installation? GetById(int id)
+    {
+        InstallationEntity? installation = context.Installations
+            .AsNoTracking()
+            .FirstOrDefault(i => i.InstallationId == id);
+
+        return mapper.Map<Installation>(installation);
+    }
+
     public async Task<int?> GetMaxPrinterOrderByInstallationNameAsync(string installationName, int branchId)
     {
         return await context.Installations
@@ -57,7 +67,8 @@ public class InstallationRepository(PrintingManagementContext context, IMapper m
     {
         IQueryable<InstallationEntity> installationsQuery = context.Installations
             .AsNoTracking()
-            .Include(p => p.Branch);
+            .Include(p => p.Branch)
+            .Include(p => p.Printer);
 
         if (!string.IsNullOrWhiteSpace(branchName))
         {

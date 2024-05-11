@@ -33,6 +33,15 @@ public class PrinterRepository(PrintingManagementContext context, IMapper mapper
         return mapper.Map<Printer>(printer);
     }
 
+    public Printer? GetById(int printerId)
+    {
+        PrinterEntity? printer = context.Printers
+             .AsNoTracking()
+             .FirstOrDefault(p => p.PrinterId == printerId);
+
+        return mapper.Map<Printer>(printer);
+    }
+
     public async Task<IReadOnlyList<Printer>> GetByPageAsync(int skip, int pageSize, Logic.Enums.ConnectionType? connectionType)
     {
         IQueryable<PrinterEntity> printersQuery = context.Printers

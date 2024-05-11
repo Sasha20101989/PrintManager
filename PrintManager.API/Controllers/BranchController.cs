@@ -2,7 +2,7 @@
 using PrintManager.API.Contracts.Branch;
 using PrintManager.Applpication.Interfaces;
 using PrintManager.Logic.Models;
-using Swashbuckle.AspNetCore.Annotations;
+using System.Net;
 
 namespace PrintManager.API.Controllers
 {
@@ -16,12 +16,9 @@ namespace PrintManager.API.Controllers
         /// <summary>
         /// Получает список филиалов с возможностью пагинации.
         /// </summary>
-        /// <param name="branchService">Сервис для работы с филиалами.</param>
-        /// <param name="request">Запрос на получение филиалов.</param>
-        /// <returns>Список филиалов.</returns>
         [HttpGet]
-        [SwaggerResponse(StatusCodes.Status200OK)]
-        [ProducesDefaultResponseType]
+        [ProducesResponseType(typeof(IReadOnlyList<Branch>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Index(
             [FromServices] IBranchService branchService,
             [FromQuery] GetBranchRequest request)

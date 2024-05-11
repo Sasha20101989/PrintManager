@@ -10,9 +10,13 @@ public interface IInstallationStore
 
     Task<Installation?> GetByIdAsync(int id);
 
-    Task<int?> GetMaxPrinterOrderByInstallationNameAsync(string installationName);
-
     Task<IReadOnlyList<Installation>> GetByPageAsync(int skip, int pageSize, string branchName);
 
     Task<Installation?> GetByProperties(string installationName, int branchId, int printerId, int printerOrder);
+
+    Task<int?> GetMaxPrinterOrderByInstallationNameAsync(string installationName, int branchId);
+
+    Task<bool> DefaultInstallationExistsInBranchAsync(string installationName, int branchId);
+
+    Task<bool> IsFirstInstallationInBranchAsync(string installationName, int branchId);
 }

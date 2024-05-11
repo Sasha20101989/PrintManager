@@ -33,15 +33,15 @@ public class PrinterRepository(PrintingManagementContext context, IMapper mapper
         return mapper.Map<Printer>(printer);
     }
 
-    public async Task<IReadOnlyList<Printer>> GetByPageAsync(int skip, int pageSize, string? connectionType = null)
+    public async Task<IReadOnlyList<Printer>> GetByPageAsync(int skip, int pageSize, Logic.Enums.ConnectionType? connectionType)
     {
         IQueryable<PrinterEntity> printersQuery = context.Printers
             .AsNoTracking()
             .Include(p => p.ConnectionType);
 
-        if (!string.IsNullOrWhiteSpace(connectionType))
+        if (connectionType.HasValue)
         {
-            printersQuery = printersQuery.Where(p => p.ConnectionType.ConnectionTypeName == connectionType);
+            printersQuery = printersQuery.Where(p => p.ConnectionType.ConnectionTypeName == connectionType.ToString());
         }
 
         return await printersQuery

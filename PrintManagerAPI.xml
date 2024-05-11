@@ -56,7 +56,7 @@
         </member>
         <member name="P:PrintManager.API.Contracts.Printer.GetPrinterRequest.ConnectionType">
             <summary>
-            Тип подключения (local для локального, network для сетевого).
+            Тип подключения
             </summary>
         </member>
         <member name="P:PrintManager.API.Contracts.Printer.GetPrinterRequest.Page">
@@ -66,7 +66,7 @@
         </member>
         <member name="P:PrintManager.API.Contracts.Printer.GetPrinterRequest.PageSize">
             <summary>
-            Размер страницы (количество элементов на странице).
+            Размер страницы (количество элементов на странице)
             </summary>
         </member>
         <member name="T:PrintManager.API.Controllers.BranchController">
@@ -78,9 +78,6 @@
             <summary>
             Получает список филиалов с возможностью пагинации.
             </summary>
-            <param name="branchService">Сервис для работы с филиалами.</param>
-            <param name="request">Запрос на получение филиалов.</param>
-            <returns>Список филиалов.</returns>
         </member>
         <member name="T:PrintManager.API.Controllers.EmployeeController">
             <summary>
@@ -100,6 +97,26 @@
             Контроллер для управления инсталяциями.
             </summary>
         </member>
+        <member name="M:PrintManager.API.Controllers.InstallationController.Create(PrintManager.Applpication.Interfaces.IInstallationService,PrintManager.Applpication.Interfaces.IBranchService,PrintManager.Applpication.Interfaces.IPrinterService,PrintManager.API.Contracts.Installation.CreateInstallationRequest)">
+            <summary>
+            Создание инсталяции
+            </summary>
+        </member>
+        <member name="M:PrintManager.API.Controllers.InstallationController.GetById(PrintManager.Applpication.Interfaces.IInstallationService,System.Int32)">
+            <summary>
+            Получение сведений об инсталляции по параметру, позволяющему её уникально идентифицировать
+            </summary>
+        </member>
+        <member name="M:PrintManager.API.Controllers.InstallationController.IndexByBranchName(PrintManager.Applpication.Interfaces.IInstallationService,PrintManager.API.Contracts.Installation.GetInstallationRequest)">
+            <summary>
+            Получение списка всех имеющихся инсталляций с возможностью фильтрации по конкретному филиалу
+            </summary>
+        </member>
+        <member name="M:PrintManager.API.Controllers.InstallationController.Delete(PrintManager.Applpication.Interfaces.IInstallationService,System.Int32)">
+            <summary>
+            Удаление записи об инсталляции устройства печати
+            </summary>
+        </member>
         <member name="T:PrintManager.API.Controllers.PrinterController">
             <summary>
             Контроллер для управления принтерами.
@@ -107,7 +124,7 @@
         </member>
         <member name="M:PrintManager.API.Controllers.PrinterController.Index(PrintManager.Applpication.Interfaces.IPrinterService,PrintManager.API.Contracts.Printer.GetPrinterRequest)">
             <summary>
-            Получение принтеров с указанным типом подключения
+            Получение принтеров с возможностью фильтрации по типу и пагинации
             </summary>
         </member>
         <member name="T:PrintManager.API.Middlewares.GlobalExceptionHandlingMiddleware">

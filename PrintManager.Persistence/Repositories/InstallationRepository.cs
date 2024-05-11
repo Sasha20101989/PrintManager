@@ -35,12 +35,22 @@ public class InstallationRepository(PrintingManagementContext context, IMapper m
         return mapper.Map<Installation>(installation);
     }
 
-    public async Task<int?> GetMaxPrinterOrderByInstallationNameAsync(string installationName)
+    public async Task<int?> GetMaxPrinterOrderByInstallationNameAsync(string installationName, int branchId)
     {
         return await context.Installations
             .AsNoTracking()
-            .Where(i => installationName == i.InstallationName)
+            .Where(i => installationName == i.InstallationName && i.BranchId == branchId)
             .MaxAsync(inst => inst.PrinterOrder);
+    }
+
+    public async Task<bool> DefaultInstallationExistsInBranchAsync(string installationName, int branchId)
+    {
+        return await context.Installations.AnyAsync(i => i.InstallationName == installationName && i.BranchId == branchId && i.DefaultInstallation);
+    }
+
+    public async Task<bool> IsFirstInstallationInBranchAsync(string installationName, int branchId)
+    {
+        return !await context.Installations.AnyAsync(i => i.InstallationName == installationName && i.BranchId == branchId);
     }
 
     public async Task<IReadOnlyList<Installation>> GetByPageAsync(int skip, int pageSize, string branchName)

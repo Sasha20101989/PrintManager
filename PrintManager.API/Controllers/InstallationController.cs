@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure.Core;
+using Microsoft.AspNetCore.Mvc;
 using PrintManager.API.Contracts.Installation;
 using PrintManager.Applpication.Interfaces;
-using PrintManager.Applpication.Services;
 using PrintManager.Logic.Models;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Reflection;
+using System.Net;
 
 namespace PrintManager.API.Controllers;
 
@@ -15,48 +15,31 @@ namespace PrintManager.API.Controllers;
 [Route("api/[controller]")]
 public class InstallationController : ControllerBase
 {
+    /// <summary>
+    /// Создание инсталяции
+    /// </summary>
     [HttpPost]
-    [SwaggerResponse(StatusCodes.Status200OK)]
-    [SwaggerResponse(StatusCodes.Status400BadRequest)]
-    [SwaggerResponse(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(Installation), (int)HttpStatusCode.Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Create(
         [FromServices] IInstallationService installationService,
         [FromServices] IBranchService branchService,
         [FromServices] IPrinterService printerService,
         [FromBody] CreateInstallationRequest request)
     {
-        if (request.InstallationName is null)
-        {
-            return BadRequest("Installation name is required.");
-        }
-
-        if (request.PrinterId <= 0)
-        {
-            return BadRequest();
-        }
-
-        if (request.BranchId <= 0)
-        {
-            return BadRequest();
-        }
-
-        if (request.PrinterOrder < 0)
-        {
-            return BadRequest();
-        } 
-
         Branch? existingBranch = await branchService.GetByIdAsync(request.BranchId);
 
         if (existingBranch is null)
         {
-            return NotFound();
+            return NotFound($"Branch with id {request.BranchId} not found.");
         }
 
         Printer? existingPrinter = await printerService.GetByIdAsync(request.PrinterId);
 
         if (existingPrinter is null)
         {
-            return NotFound();
+            return NotFound($"Printer with id {request.PrinterId} not found.");
         }
 
         Installation newInstallation = await installationService.CreateAsync(request.InstallationName, existingBranch, existingPrinter, request.DefaultInstallation, request.PrinterOrder == 0 ? null : request.PrinterOrder);
@@ -64,63 +47,68 @@ public class InstallationController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = newInstallation.InstallationId }, newInstallation);
     }
 
+    /// <summary>
+    /// Получение сведений об инсталляции по параметру, позволяющему её уникально идентифицировать
+    /// </summary>
     [HttpGet]
     [Route("{id}")]
-    [SwaggerResponse(StatusCodes.Status200OK)]
-    [SwaggerResponse(StatusCodes.Status400BadRequest)]
-    [SwaggerResponse(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(Installation), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(
-        [FromServices] IInstallationService installationService, 
-        int id)
+    [FromServices] IInstallationService installationService,
+    int id)
     {
         if (id <= 0)
         {
-            return BadRequest();
+            return BadRequest("Id must be greater than or equal to 1.");
         }
 
         Installation? installation = await installationService.GetByIdAsync(id);
 
         if (installation is null)
         {
-            return NotFound();
+            return NotFound($"Installation with id {id} not found.");
         }
 
         return Ok(installation);
     }
 
+    /// <summary>
+    /// Получение списка всех имеющихся инсталляций с возможностью фильтрации по конкретному филиалу
+    /// </summary>
     [HttpGet("branch")]
-    [SwaggerResponse(StatusCodes.Status200OK)]
-    [SwaggerResponse(StatusCodes.Status400BadRequest)]
-    [ProducesDefaultResponseType]
+    [ProducesResponseType(typeof(IReadOnlyList<Installation>), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> IndexByBranchName(
-        [FromServices] IInstallationService installationService,
-        [FromQuery] GetInstallationRequest request)
+    [FromServices] IInstallationService installationService,
+    [FromQuery] GetInstallationRequest request)
     {
-        if (string.IsNullOrWhiteSpace(request.Branch))
-        {
-            return BadRequest("Branch name is required.");
-        }
-
         IReadOnlyList<Installation> installations = await installationService.GetByBranchNameAsync(request.Branch, request.Page, request.PageSize);
 
         return Ok(installations);
     }
 
-    [HttpDelete("{installationId}")]
-    [SwaggerResponse(StatusCodes.Status200OK)]
-    [SwaggerResponse(StatusCodes.Status404NotFound)]
+    /// <summary>
+    /// Удаление записи об инсталляции устройства печати
+    /// </summary>
+    [HttpDelete("{id}")]
+    [ProducesResponseType(typeof(IReadOnlyList<Installation>), (int)HttpStatusCode.NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Delete(
-        [FromServices] IInstallationService installationService, 
-        int installationId)
+        [FromServices] IInstallationService installationService,
+        int id)
     {
-        Installation? installation = await installationService.GetByIdAsync(installationId);
+        Installation? installation = await installationService.GetByIdAsync(id);
 
         if (installation is null)
         {
-            return NotFound();
+            return NotFound($"Installation with id {id} not found.");
         }
 
-        await installationService.DeleteAsync(installationId);
+        await installationService.DeleteAsync(installation);
 
         return NoContent();
     }

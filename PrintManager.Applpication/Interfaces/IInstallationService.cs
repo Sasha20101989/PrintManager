@@ -6,7 +6,7 @@ public interface IInstallationService
 {
     Task<Installation> CreateAsync(string installationName, Branch branch, Printer printer, bool defaultInstallation, int? printerOrder);
 
-    Task DeleteAsync(int id);
+    Task DeleteAsync(Installation installationToDelete);
 
     Task<IReadOnlyList<Installation>> GetByBranchNameAsync(string branchName, int? page, int? pageSize);
 

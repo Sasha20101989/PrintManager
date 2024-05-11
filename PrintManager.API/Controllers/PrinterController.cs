@@ -2,7 +2,7 @@
 using PrintManager.API.Contracts.Printer;
 using PrintManager.Applpication.Interfaces;
 using PrintManager.Logic.Models;
-using Swashbuckle.AspNetCore.Annotations;
+using System.Net;
 
 namespace PrintManager.API.Controllers
 {
@@ -14,22 +14,16 @@ namespace PrintManager.API.Controllers
     public class PrinterController : ControllerBase
     {
         /// <summary>
-        /// Получение принтеров с указанным типом подключения
+        /// Получение принтеров с возможностью фильтрации по типу и пагинации
         /// </summary>
         [HttpGet]
-        [SwaggerResponse(StatusCodes.Status200OK)]
-        [SwaggerResponse(StatusCodes.Status400BadRequest)]
-        [ProducesDefaultResponseType]
+        [ProducesResponseType(typeof(IReadOnlyList<Printer>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Index(
             [FromServices] IPrinterService printerService,
             [FromQuery] GetPrinterRequest request)
         {
-            if (!string.IsNullOrWhiteSpace(request.ConnectionType) &&
-                !Enum.TryParse<Logic.Enums.ConnectionType>(request.ConnectionType, true, out _))
-            {
-                return BadRequest("The specified connection type is not supported.");
-            }
-
             IReadOnlyList<Printer> printers = await printerService.GetByPageAsync(request.Page, request.PageSize, request.ConnectionType);
 
             return Ok(printers);

@@ -4,7 +4,7 @@ namespace PrintManager.Logic.Models;
 
 public class Installation
 {
-    public int? InstallationId { get; set; }
+    public int InstallationId { get; set; }
 
     public string InstallationName { get; set; } = null!;
 

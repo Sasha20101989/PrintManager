@@ -24,8 +24,11 @@ namespace PrintManager.API
             services.AddLogging();
             services.AddExceptionHandler();
 
-            services.AddDomains();
+            services.AddCacheServices();
+            services.AddServices();
             services.AddRepositories();
+
+            services.AddMemoryCache();
 
             services.AddAutoMapper(typeof(DbMappingProfile));
 

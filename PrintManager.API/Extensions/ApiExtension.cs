@@ -9,7 +9,7 @@ namespace PrintManager.API.Extensions
 {
     public static class ApiExtension
     {
-        public static IServiceCollection AddDomains(this IServiceCollection services)
+        public static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddScoped<IBranchService, BranchService>();
             services.AddScoped<IConnectionTypeService, ConnectionTypeService>();
@@ -40,6 +40,13 @@ namespace PrintManager.API.Extensions
             services.AddScoped<IPrintJobNameStore, PrintJobNameRepository>();
             services.AddScoped<IPrintSessionStore, PrintSessionRepository>();
             services.AddScoped<IStatusStore, StatusRepository>();
+
+            return services;
+        }
+
+        public static IServiceCollection AddCacheServices(this IServiceCollection services)
+        {
+            services.AddSingleton<IInstallationMemoryCache, InstallationMemoryCache>();
 
             return services;
         }

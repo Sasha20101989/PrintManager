@@ -15,4 +15,6 @@ public class Installation
     public bool DefaultInstallation { get; set; }
 
     public int? PrinterOrder { get; set; }
+
+    public Branch? Branch { get; set; }
 }

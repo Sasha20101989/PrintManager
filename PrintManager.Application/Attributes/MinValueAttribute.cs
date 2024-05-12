@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Authentication;
+using PrintManager.Application.Properties;
+using System.ComponentModel.DataAnnotations;
 
 namespace PrintManager.Application.Attributes
 {
@@ -11,7 +13,7 @@ namespace PrintManager.Application.Attributes
                 return ValidationResult.Success;
             }
 
-            return new ValidationResult($"The field {validationContext.DisplayName} must be greater than or equal to {minValue}.");
+            return new ValidationResult(string.Format(AttributesResources.ErrorMinValueValidationMessage, validationContext.DisplayName, minValue));
         }
     }
 }

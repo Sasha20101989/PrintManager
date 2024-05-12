@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using PrintManager.Application.Properties;
+using System.ComponentModel.DataAnnotations;
 
 namespace PrintManager.Application.Attributes
 {
@@ -11,7 +12,7 @@ namespace PrintManager.Application.Attributes
                 return ValidationResult.Success;
             }
 
-            return new ValidationResult($"The field {validationContext.DisplayName} must be a non-negative number.");
+            return new ValidationResult(string.Format(AttributesResources.ErrorNonNegativeValidationMessage, validationContext.DisplayName));
         }
     }
 }

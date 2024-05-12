@@ -1,5 +1,6 @@
 ﻿using PrintManager.Application.DefaultValues;
 using PrintManager.Application.Interfaces;
+using PrintManager.Application.Parameters;
 using PrintManager.Logic.Models;
 using PrintManager.Logic.Stores;
 
@@ -19,11 +20,8 @@ public class PrinterService(IPrinterStore printerStore) : IPrinterService
 
     public async Task<IReadOnlyList<Printer>> GetByPageAsync(int ? page, int? pageSize, Logic.Enums.ConnectionTypes? connectionType)
     {
-        int pageNumber = page.HasValue && page > 0 ? page.Value : DefaultPaginationValues.PrinterDefaultPage;
-        int size = pageSize.HasValue && pageSize > 0 ? pageSize.Value : DefaultPaginationValues.PrinterDefaultPageSize;
+        PaginationParameters paginationParameters = PaginationParameters.Create(page, pageSize, DefaultPaginationValues.PrinterDefaultPage, DefaultPaginationValues.PrinterDefaultPageSize);
 
-        int skip = (pageNumber - 1) * size;
-
-        return await printerStore.GetByPageAsync(skip, size, connectionType);
+        return await printerStore.GetByPageAsync(paginationParameters.Skip, paginationParameters.Size, connectionType);
     }
 }

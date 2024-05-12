@@ -6,5 +6,5 @@ public class Branch
 
     public string BranchName { get; set; } = null!;
 
-    public string? Location { get; set; } = null!;
+    public string Location { get; set; } = null!;
 }

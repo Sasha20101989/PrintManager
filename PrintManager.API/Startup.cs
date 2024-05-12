@@ -8,83 +8,82 @@ using PrintManager.Persistence;
 using PrintManager.Persistence.Mappings;
 using System.Globalization;
 
-namespace PrintManager.API
+namespace PrintManager.API;
+
+public class Startup(IConfiguration configuration)
 {
-    public class Startup(IConfiguration configuration)
+    public void ConfigureServices(IServiceCollection services)
     {
-        public void ConfigureServices(IServiceCollection services)
+        services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+        services.AddControllers().AddNewtonsoftJson(o =>
         {
-            services.AddLocalization(options => options.ResourcesPath = "Resources");
+            o.SerializerSettings.Converters.Add(new StringEnumConverter());
+        });
 
-            services.AddControllers().AddNewtonsoftJson(o =>
+        services.AddSwaggerGenNewtonsoftSupport();
+        services.AddDocumentation();
+
+        services.AddEndpointsApiExplorer();
+        services.AddLogging();
+        services.AddExceptionHandler();
+
+        services.AddCacheServices();
+        services.AddServices();
+        services.AddRepositories();
+        services.AddFilters();
+
+        services.AddMemoryCache();
+
+        services.AddAutoMapper(typeof(DbMappingProfile));
+
+        services.AddDbContext<PrintingManagementContext>(
+            options =>
             {
-                o.SerializerSettings.Converters.Add(new StringEnumConverter());
+                options.UseSqlServer(configuration.GetConnectionString(nameof(PrintingManagementContext)));
             });
+    }
 
-            services.AddSwaggerGenNewtonsoftSupport();
-            services.AddDocumentation();
-
-            services.AddEndpointsApiExplorer();
-            services.AddLogging();
-            services.AddExceptionHandler();
-
-            services.AddCacheServices();
-            services.AddServices();
-            services.AddRepositories();
-            services.AddFilters();
-
-            services.AddMemoryCache();
-
-            services.AddAutoMapper(typeof(DbMappingProfile));
-
-            services.AddDbContext<PrintingManagementContext>(
-                options =>
-                {
-                    options.UseSqlServer(configuration.GetConnectionString(nameof(PrintingManagementContext)));
-                });
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        if (env.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        CultureInfo[] supportedCultures =
+        [
+            new CultureInfo("en"),
+        ];
+
+        app.UseRequestLocalization(new RequestLocalizationOptions
         {
-            if (env.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+            DefaultRequestCulture = new RequestCulture("ru"),
+            SupportedCultures = supportedCultures,
+            SupportedUICultures = supportedCultures
+        });
 
-            CultureInfo[] supportedCultures =
-            [
-                new CultureInfo("en"),
-            ];
+        app.UseHttpsRedirection();
 
-            app.UseRequestLocalization(new RequestLocalizationOptions
-            {
-                DefaultRequestCulture = new RequestCulture("ru"),
-                SupportedCultures = supportedCultures,
-                SupportedUICultures = supportedCultures
-            });
+        app.UseRouting();
 
-            app.UseHttpsRedirection();
+        app.UseCookiePolicy(new()
+        {
+            MinimumSameSitePolicy = SameSiteMode.Strict,
+            HttpOnly = HttpOnlyPolicy.Always,
+            Secure = CookieSecurePolicy.Always
+        });
 
-            app.UseRouting();
+        app.UseAuthentication();
 
-            app.UseCookiePolicy(new()
-            {
-                MinimumSameSitePolicy = SameSiteMode.Strict,
-                HttpOnly = HttpOnlyPolicy.Always,
-                Secure = CookieSecurePolicy.Always
-            });
+        app.UseAuthorization();
 
-            app.UseAuthentication();
+        app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
-            app.UseAuthorization();
-
-            app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-        }
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllers();
+        });
     }
 }

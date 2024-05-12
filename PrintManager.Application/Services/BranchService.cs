@@ -1,5 +1,6 @@
 ﻿using PrintManager.Application.DefaultValues;
 using PrintManager.Application.Interfaces;
+using PrintManager.Application.Parameters;
 using PrintManager.Logic.Models;
 using PrintManager.Logic.Stores;
 
@@ -19,11 +20,8 @@ public class BranchService(IBranchStore branchStore) : IBranchService
 
     public async Task<IReadOnlyList<Branch>> GetByPageAsync(int? page, int? pageSize)
     {
-        int pageNumber = page.HasValue && page > 0 ? page.Value : DefaultPaginationValues.BranchDefaultPage;
-        int size = pageSize.HasValue && pageSize > 0 ? pageSize.Value : DefaultPaginationValues.BranchDefaultPageSize;
+        PaginationParameters paginationParameters = PaginationParameters.Create(page, pageSize, DefaultPaginationValues.BranchDefaultPage, DefaultPaginationValues.BranchDefaultPageSize);
 
-        int skip = (pageNumber - 1) * size;
-
-        return await branchStore.GetByPageAsync(skip, size);
+        return await branchStore.GetByPageAsync(paginationParameters.Skip, paginationParameters.Size);
     }
 }

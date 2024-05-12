@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PrintManager.Application.Contracts.Branch;
+using PrintManager.Application.DTOs;
 using PrintManager.Application.Interfaces;
 using PrintManager.Logic.Models;
 using System.Net;
@@ -23,6 +24,8 @@ public class BranchController : ControllerBase
         [FromServices] IBranchService branchService,
         [FromQuery] GetBranchRequest request)
     {
-        return Ok(await branchService.GetByPageAsync(request.Page, request.PageSize));
+        IReadOnlyList<Branch> branches = await branchService.GetByPageAsync(request.Page, request.PageSize);
+
+        return Ok(branches.Select(BranchDTO.Create));
     }
 }

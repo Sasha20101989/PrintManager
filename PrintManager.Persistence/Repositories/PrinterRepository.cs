@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using PrintManager.Logic.Models;
 using PrintManager.Logic.Stores;
 using PrintManager.Persistence.Entities;
-using System.Reflection;
 
 namespace PrintManager.Persistence.Repositories;
 
@@ -29,6 +28,7 @@ public class PrinterRepository(PrintingManagementContext context, IMapper mapper
     {
         PrinterEntity? printer = await context.Printers
             .AsNoTracking()
+            .Include(p => p.ConnectionType)
             .FirstOrDefaultAsync(p => p.PrinterId == printerId);
 
         return mapper.Map<Printer>(printer);

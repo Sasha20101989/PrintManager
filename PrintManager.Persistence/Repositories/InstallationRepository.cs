@@ -30,6 +30,9 @@ public class InstallationRepository(PrintingManagementContext context, IMapper m
     {
         InstallationEntity? installation = await context.Installations
             .AsNoTracking()
+            .Include(i => i.Branch)
+            .Include(i => i.Printer)
+            .ThenInclude(p => p.ConnectionType)
             .FirstOrDefaultAsync(i => i.InstallationId == id);
 
         return mapper.Map<Installation>(installation);
@@ -40,6 +43,9 @@ public class InstallationRepository(PrintingManagementContext context, IMapper m
     {
         InstallationEntity? installation = context.Installations
             .AsNoTracking()
+            .Include(i => i.Branch)
+            .Include(i => i.Printer)
+            .ThenInclude(p => p.ConnectionType)
             .FirstOrDefault(i => i.InstallationId == id);
 
         return mapper.Map<Installation>(installation);

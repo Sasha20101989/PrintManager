@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PrintManager.Application.Contracts.Installation;
+using PrintManager.Application.DTOs;
 using PrintManager.Application.Filters.Branch;
 using PrintManager.Application.Filters.Installation;
 using PrintManager.Application.Filters.Printer;
@@ -36,13 +37,14 @@ public class InstallationController : ControllerBase
             createInstallationRequest.DefaultInstallation,
             createInstallationRequest.PrinterOrder == 0 ? null : createInstallationRequest.PrinterOrder);
 
+        InstallationDTO installationRDO = InstallationDTO.Create(newInstallation);
+
         return CreatedAtAction(nameof(GetById), new { id = newInstallation.InstallationId }, newInstallation);
     }
 
     /// <summary>
     /// Получение сведений об инсталляции по параметру, позволяющему её уникально идентифицировать
     /// </summary>
-    /// <param name="id">Уникальный идентификатор инсталяции</param>
     [HttpGet]
     [Route("{id}")]
     [ProducesResponseType(typeof(Installation), (int)HttpStatusCode.OK)]
@@ -53,7 +55,7 @@ public class InstallationController : ControllerBase
     [FromServices] IInstallationService installationService,
     int id)
     {
-        return Ok(await installationService.GetByIdAsync(id));
+        return Ok(InstallationDTO.Create(await installationService.GetByIdAsync(id)));
     }
 
     /// <summary>
@@ -67,7 +69,9 @@ public class InstallationController : ControllerBase
         [FromServices] IInstallationService installationService,
         [FromQuery] GetInstallationRequest getInstallationRequest)
     {
-        return Ok(await installationService.GetByBranchNameAsync(getInstallationRequest.Branch, getInstallationRequest.Page, getInstallationRequest.PageSize));
+        IReadOnlyList<Installation> installations = await installationService.GetByBranchNameAsync(getInstallationRequest.Branch, getInstallationRequest.Page, getInstallationRequest.PageSize);
+
+        return Ok(installations.Select(InstallationDTO.Create));
     }
 
     /// <summary>

@@ -43,6 +43,11 @@ public class JobRepository(PrintingManagementContext context, IMapper mapper) : 
     {
         JobEntity? jobEntity = await context.Jobs
             .AsNoTracking()
+            .Include(i => i.Status)
+            .Include(i => i.Printer)
+            .ThenInclude(p => p.ConnectionType)
+            .Include(i => i.Employee)
+            .ThenInclude(e => e.Branch)
             .FirstOrDefaultAsync(i => i.JobId == id);
 
         return mapper.Map<Job>(jobEntity);

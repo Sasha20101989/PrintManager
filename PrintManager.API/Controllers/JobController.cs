@@ -8,6 +8,7 @@ using PrintManager.Logic.Models;
 
 using System.Net;
 using Microsoft.Extensions.Localization;
+using PrintManager.Application.DTOs;
 
 namespace PrintManager.API.Controllers;
 
@@ -40,9 +41,9 @@ public class JobController : ControllerBase
 
         await jobService.SimulatePrintingAsync(generatedJob);
 
-        Job newJob = await jobService.CreateJobAsync(generatedJob);
+        JobDTO jobDTO = JobDTO.Create(await jobService.CreateJobAsync(generatedJob));
 
-        return CreatedAtAction(nameof(GetById), new { id = newJob.JobId }, newJob);
+        return CreatedAtAction(nameof(GetById), new { id = jobDTO.JobId }, jobDTO);
     }
 
     /// <summary>
@@ -58,7 +59,7 @@ public class JobController : ControllerBase
     [FromServices] IJobService jobService,
     int id)
     {
-        return Ok(await jobService.GetByIdAsync(id));
+        return Ok(JobDTO.Create(await jobService.GetByIdAsync(id)));
     }
 
     /// <summary>

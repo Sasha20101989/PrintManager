@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PrintManager.Application.Contracts.Printer;
+using PrintManager.Application.DTOs;
 using PrintManager.Application.Interfaces;
-using PrintManager.Application.RDOs;
 using PrintManager.Logic.Models;
 using System.Net;
 
@@ -27,14 +27,8 @@ public class PrinterController : ControllerBase
     {
         IReadOnlyList<Printer> printers = await printerService.GetByPageAsync(request.Page, request.PageSize, request.ConnectionType);
 
-        IEnumerable<PrinterRDO> printerRDOs = printers.Select(p =>
-        PrinterRDO.Create(
-            p.PrinterId, 
-            p.PrinterName, 
-            p.Macaddress, 
-            p.DefaultPrinter,
-            p.ConnectionType));
+        IEnumerable<PrinterDTO> printerDTOs = printers.Select(PrinterDTO.Create);
 
-        return Ok(printerRDOs);
+        return Ok(printerDTOs);
     }
 }

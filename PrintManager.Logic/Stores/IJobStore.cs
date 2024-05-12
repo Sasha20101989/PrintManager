@@ -10,6 +10,5 @@ public interface IJobStore
 
     Job? GetById(int id);
 
-
     Task<Job?> GetByIdAsync(int id);
 }

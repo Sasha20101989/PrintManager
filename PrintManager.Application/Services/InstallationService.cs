@@ -1,5 +1,6 @@
 ﻿using PrintManager.Application.DefaultValues;
 using PrintManager.Application.Interfaces;
+using PrintManager.Application.Parameters;
 using PrintManager.Logic.Models;
 using PrintManager.Logic.Stores;
 
@@ -68,10 +69,16 @@ public class InstallationService(
             DefaultInstallation = defaultInstallation,
             PrinterOrder = printerOrder
         };
+      
+        Installation createdInstallation = await installationStore.CreateAsync(newInstallation);
+
+        createdInstallation.Printer = printer;
+
+        createdInstallation.Branch = branch;
 
         installationMemoryCache.RemoveInstallations();
 
-        return await installationStore.CreateAsync(newInstallation);
+        return createdInstallation;
     }
 
     public async Task DeleteAsync(Installation installationToDelete)
@@ -93,18 +100,16 @@ public class InstallationService(
 
     public async Task<IReadOnlyList<Installation>> GetByBranchNameAsync(string branchName, int? page = null, int? pageSize = null)
     {
-        int pageNumber = page.HasValue && page > 0 ? page.Value : DefaultPaginationValues.InstallationDefaultPage;
-        int size = pageSize.HasValue && pageSize > 0 ? pageSize.Value : DefaultPaginationValues.InstallationDefaultPageSize;
-        int skip = (pageNumber - 1) * size;
+        PaginationParameters paginationParameters = PaginationParameters.Create(page, pageSize, DefaultPaginationValues.InstallationDefaultPage, DefaultPaginationValues.InstallationDefaultPageSize);
 
-        IReadOnlyList<Installation>? cachedInstallations = installationMemoryCache.GetInstallationsByPage(skip, size, branchName);
+        IReadOnlyList<Installation>? cachedInstallations = installationMemoryCache.GetInstallationsByPage(paginationParameters.Skip, paginationParameters.Size, branchName);
 
         if (cachedInstallations is not null)
         {
             return cachedInstallations;
         }
 
-        IReadOnlyList<Installation> installations = await installationStore.GetByPageAsync(skip, size, branchName);
+        IReadOnlyList<Installation> installations = await installationStore.GetByPageAsync(paginationParameters.Skip, paginationParameters.Size, branchName);
 
         installationMemoryCache.SetInstallations(installations);
 

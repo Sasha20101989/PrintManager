@@ -1,18 +1,47 @@
-﻿using PrintManager.Application.Contracts.Job;
+﻿using CsvHelper.Configuration;
+using PrintManager.Application.Contracts.Job;
 using PrintManager.Application.Interfaces;
 using PrintManager.Logic.Models;
 using PrintManager.Logic.Stores;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 
 namespace PrintManager.Application.Services;
 
-public class JobService(IJobStore jobStore, IEmployeeService employeeService, IPrinterService printerService, IInstallationService installationService, ICSVService cSVService) : IJobService
+public class JobService(
+    IJobStore jobStore, 
+    IEmployeeService employeeService, 
+    IPrinterService printerService, 
+    IInstallationService installationService, 
+    IStatusService statusService,
+    ICSVService cSVService) : IJobService
 {
     private readonly Random _random = new();
 
     public async Task<Job> CreateJobAsync(Job newJob)
     {
-        return await jobStore.CreateJobAsync(newJob);
+        Job createdJob = await jobStore.CreateJobAsync(newJob);
+
+        if (createdJob.PrinterId is null)
+        {
+            throw new ArgumentNullException();
+        }
+
+        if (createdJob.StatusId is null)
+        {
+            throw new ArgumentNullException();
+        }
+
+        createdJob.Printer = await printerService.GetByIdAsync(createdJob.PrinterId.Value) ??
+            throw new ArgumentNullException($"{nameof(Printer)} with id {createdJob.PrinterId} not found.");
+
+        createdJob.Employee = await employeeService.GetByIdAsync(createdJob.EmployeeId) ??
+            throw new ArgumentNullException($"{nameof(Employee)} with id {createdJob.EmployeeId} not found.");
+
+        createdJob.Status = await statusService.GetByIdAsync(createdJob.StatusId.Value) ??
+                throw new ArgumentNullException($"{nameof(Status)} with id {createdJob.StatusId} not found.");
+
+        return createdJob;
     }
 
     public async Task<Job> CreateJobFromRecordAsync(CsvJobData record)
@@ -76,7 +105,13 @@ public class JobService(IJobStore jobStore, IEmployeeService employeeService, IP
 
     public IReadOnlyList<CsvJobData> ImportJobsFromCsv(Stream csvStream)
     {
-        return cSVService.ReadCSV<CsvJobData>(csvStream)
+        CsvConfiguration configuration = new CsvConfiguration(CultureInfo.InvariantCulture)
+        {
+            Delimiter = ";",
+            HasHeaderRecord = true
+        };
+
+        return cSVService.ReadCSV<CsvJobData>(csvStream, configuration)
             .Where(ValidateRecord)
             .ToList();
     }

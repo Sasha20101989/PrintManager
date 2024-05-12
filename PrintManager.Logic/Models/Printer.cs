@@ -15,5 +15,5 @@ public class Printer
 
     public int ConnectionTypeId { get; set; }
 
-    public ConnectionType ConnectionType { get; set; }
+    public ConnectionType? ConnectionType { get; set; }
 }

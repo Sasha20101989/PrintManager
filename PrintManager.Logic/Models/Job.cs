@@ -12,5 +12,5 @@ public class Job
 
     public int PagesPrinted { get; set; }
 
-    public int StatusId { get; set; }
+    public int? StatusId { get; set; }
 }

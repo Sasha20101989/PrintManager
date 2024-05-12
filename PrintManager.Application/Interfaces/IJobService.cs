@@ -1,10 +1,11 @@
-﻿using PrintManager.Logic.Models;
+﻿using PrintManager.Application.Contracts.Job;
+using PrintManager.Logic.Models;
 
 namespace PrintManager.Application.Interfaces;
 
 public interface IJobService
 {
-    Task<Job> CreateAsync(Job newJob);
+    Task<Job> CreateJobAsync(Job newJob);
 
     Task<Job> GenerateAsync(string printJobName, int employeeId, int pagesPrinted, int? printerId);
 
@@ -12,5 +13,11 @@ public interface IJobService
 
     Task<Job?> GetByIdAsync(int id);
 
-    IReadOnlyList<Job> ImportJobsFromCsvAsync(Stream csvStream);
+    IReadOnlyList<CsvJobData> ImportJobsFromCsv(Stream csvStream);
+
+    Task<Job> CreateJobFromRecordAsync(CsvJobData record);
+
+    bool ValidateRecord(CsvJobData record);
+
+    Task SimulatePrintingAsync(Job generatedJob);
 }

@@ -64,6 +64,11 @@
             Получение сведений о задании печати по параметру, позволяющему его уникально идентифицировать
             </summary>
         </member>
+        <member name="M:PrintManager.API.Controllers.JobController.ImportJobsFromCsv(PrintManager.Application.Interfaces.IJobService,Microsoft.AspNetCore.Http.IFormFileCollection)">
+            <summary>
+            Импорт заданий печати и файла с расширением (.csv)
+            </summary>
+        </member>
         <member name="T:PrintManager.API.Controllers.PrinterController">
             <summary>
             Контроллер для управления принтерами.

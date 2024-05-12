@@ -60,6 +60,7 @@ namespace PrintManager.API.Extensions
             services.AddScoped<Branch_ValidateBranchIdFilterAttribute>();
             services.AddScoped<Printer_ValidatePrinterIdFilterAttribute>();
             services.AddScoped<Job_ValidateJobIdFilterAttribute>();
+            services.AddScoped<Job_ValidateFileCountFilterAttribute>();
 
             return services;
         }

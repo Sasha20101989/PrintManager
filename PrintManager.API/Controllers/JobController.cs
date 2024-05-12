@@ -4,8 +4,6 @@ using PrintManager.Application.Contracts.Job;
 using PrintManager.Application.Filters.Job;
 using PrintManager.Application.Interfaces;
 using PrintManager.Logic.Models;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 using System.Net;
 
@@ -18,8 +16,6 @@ namespace PrintManager.API.Controllers;
 [Route("api/[controller]")]
 public class JobController : ControllerBase
 {
-    private readonly Random random = new Random();
-
     /// <summary>
     /// Создание задания печати
     /// </summary>
@@ -35,13 +31,9 @@ public class JobController : ControllerBase
             createJobRequest.PrinterId == 0 ? null : createJobRequest.PrinterId
         );
 
-        await SimulatePrinting();
+        await jobService.SimulatePrintingAsync(generatedJob);
 
-        generatedJob.StatusId = IsPrintSuccess() ?
-            (int)Logic.Enums.Status.Success :
-            (int)Logic.Enums.Status.Failure;
-
-        Job newJob = await jobService.CreateAsync(generatedJob);
+        Job newJob = await jobService.CreateJobAsync(generatedJob);
 
         return CreatedAtAction(nameof(GetById), new { id = newJob.JobId }, newJob);
     }
@@ -62,69 +54,22 @@ public class JobController : ControllerBase
         return Ok(await jobService.GetByIdAsync(id));
     }
 
+    /// <summary>
+    /// Импорт заданий печати и файла с расширением (.csv)
+    /// </summary>
     [HttpPost("import-csv")]
     [ProducesResponseType(typeof(Job), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    [ServiceFilter(typeof(Job_ValidateFileCountFilterAttribute))]
     public async Task<IActionResult> ImportJobsFromCsv(
     [FromServices] IJobService jobService,
-    [FromServices] ICSVService cSVService,
     [FromForm] IFormFileCollection file)
     {
-        if (file.Count == 0)
-        {
-            return BadRequest("File is empty");
-        }
+        IReadOnlyList<CsvJobData> data = jobService.ImportJobsFromCsv(file[0].OpenReadStream());
 
-        List<Job> data = cSVService.ReadCSV<CsvJobData>(file[0].OpenReadStream())
-            .Where(ValidateRecord)
-            .Select(CreateJobFromRecord)
-            .ToList();
+        await Task.WhenAll(data.Select(async r => await jobService.CreateJobFromRecordAsync(r)));
 
-        //List<CsvJobData> data = cSVService.ReadCSV<CsvJobData>(file[0].OpenReadStream())
-        //    .Where(jd =>
-        //    jd.EmployeeId is not null &&
-        //    jd.PrinterId is not null &&
-        //    jd.PagesPrinted is not null &&
-        //    jd.PrintJobName is not null)
-        //    .ToList();
-
-        //IReadOnlyList<Job> importedJobs = jobService.ImportJobsFromCsvAsync();
-
-        return Ok(data);
-
-            //return UnprocessableEntity(ex.Message);
-    }
-
-    private bool ValidateRecord(CsvJobData record)
-    {
-        ValidationContext context = new(record);
-
-        return Validator.TryValidateObject(record, context, null, validateAllProperties: true);
-    }
-
-    private Job CreateJobFromRecord(CsvJobData record)
-    {
-        return new()
-        {
-            PrintJobName = record.PrintJobName,
-            EmployeeId = record.EmployeeId.Value,
-            PrinterId = record.PrinterId.Value,
-            PagesPrinted = record.PagesPrinted.Value,
-        };
-    }
-
-    private async Task SimulatePrinting()
-    {
-        int delayMilliseconds = random.Next(1000, 4001);
-
-        await Task.Delay(delayMilliseconds);
-    }
-
-    private bool IsPrintSuccess()
-    {
-        int result = random.Next(1, 3);
-
-        return result == (int)Logic.Enums.Status.Success;
+        return Ok($"{data.Count} print jobs have been imported and saved.");
     }
 }

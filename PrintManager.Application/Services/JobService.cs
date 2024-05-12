@@ -1,14 +1,37 @@
-﻿using PrintManager.Application.Interfaces;
+﻿using PrintManager.Application.Contracts.Job;
+using PrintManager.Application.Interfaces;
 using PrintManager.Logic.Models;
 using PrintManager.Logic.Stores;
+using System.ComponentModel.DataAnnotations;
 
 namespace PrintManager.Application.Services;
 
 public class JobService(IJobStore jobStore, IEmployeeService employeeService, IPrinterService printerService, IInstallationService installationService, ICSVService cSVService) : IJobService
 {
-    public async Task<Job> CreateAsync(Job newJob)
+    private readonly Random _random = new();
+
+    public async Task<Job> CreateJobAsync(Job newJob)
     {
-        return await jobStore.CreateAsync(newJob);
+        return await jobStore.CreateJobAsync(newJob);
+    }
+
+    public async Task<Job> CreateJobFromRecordAsync(CsvJobData record)
+    {
+        if (string.IsNullOrWhiteSpace(record.PrintJobName) ||
+            record.EmployeeId is null ||
+            record.PrinterId is null ||
+            record.PagesPrinted is null)
+        {
+            throw new ArgumentNullException();
+        }
+
+        Job newJob = await GenerateAsync(record.PrintJobName, record.EmployeeId.Value, record.PagesPrinted.Value, record.PrinterId.Value);
+
+        newJob.StatusId = IsPrintSuccess() ?
+            (int)Logic.Enums.Status.Success :
+            (int)Logic.Enums.Status.Failure;
+
+        return await CreateJobAsync(newJob);
     }
 
     public async Task<Job> GenerateAsync(string printJobName, int employeeId, int pagesPrinted, int? printerId)
@@ -51,8 +74,35 @@ public class JobService(IJobStore jobStore, IEmployeeService employeeService, IP
         return await jobStore.GetByIdAsync(id);
     }
 
-    public IReadOnlyList<Job> ImportJobsFromCsvAsync(Stream csvStream)
+    public IReadOnlyList<CsvJobData> ImportJobsFromCsv(Stream csvStream)
     {
-        return cSVService.ReadCSV<Job>(csvStream).ToList();
+        return cSVService.ReadCSV<CsvJobData>(csvStream)
+            .Where(ValidateRecord)
+            .ToList();
+    }
+
+    public bool ValidateRecord(CsvJobData record)
+    {
+        ValidationContext context = new(record);
+
+        return Validator.TryValidateObject(record, context, null, validateAllProperties: true);
+    }
+
+    public async Task SimulatePrintingAsync(Job generatedJob)
+    {
+        int delayMilliseconds = _random.Next(1000, 4001);
+
+        await Task.Delay(delayMilliseconds);
+
+        generatedJob.StatusId = IsPrintSuccess() ?
+            (int)Logic.Enums.Status.Success :
+            (int)Logic.Enums.Status.Failure;
+    }
+
+    private bool IsPrintSuccess()
+    {
+        int result = _random.Next(1, 3);
+
+        return result == (int)Logic.Enums.Status.Success;
     }
 }

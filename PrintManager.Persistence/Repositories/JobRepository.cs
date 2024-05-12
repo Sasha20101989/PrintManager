@@ -8,13 +8,24 @@ namespace PrintManager.Persistence.Repositories;
 
 public class JobRepository(PrintingManagementContext context, IMapper mapper) : IJobStore
 {
-    public async Task<Job> CreateAsync(Job job)
+    public async Task<Job> CreateJobAsync(Job job)
     {
         JobEntity jobEntity = mapper.Map<JobEntity>(job);
 
         await context.Jobs.AddAsync(jobEntity);
 
         await context.SaveChangesAsync();
+
+        return mapper.Map<Job>(jobEntity);
+    }
+
+    public Job CreateJob(Job job)
+    {
+        JobEntity jobEntity = mapper.Map<JobEntity>(job);
+
+        context.Jobs.Add(jobEntity);
+
+        context.SaveChanges();
 
         return mapper.Map<Job>(jobEntity);
     }

@@ -1,6 +1,6 @@
 ﻿namespace PrintManager.Logic.Enums
 {
-    public enum Status
+    public enum Statuses
     {
         Success = 1,
         Failure = 2

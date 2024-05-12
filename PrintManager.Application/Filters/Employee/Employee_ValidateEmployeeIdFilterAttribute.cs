@@ -4,6 +4,8 @@ using PrintManager.Application.Contracts.Job;
 using PrintManager.Application.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Http;
+using PrintManager.Application.Properties;
+using PrintManager.Logic.Models;
 
 namespace PrintManager.Application.Filters.Employee
 {
@@ -32,7 +34,7 @@ namespace PrintManager.Application.Filters.Employee
 
             if (!employeeId.HasValue)
             {
-                context.ModelState.AddModelError(nameof(Logic.Models.Employee.EmployeeId), $"{nameof(Logic.Models.Employee.EmployeeId)} not provided.");
+                context.ModelState.AddModelError(nameof(Logic.Models.Employee.EmployeeId), $"{string.Format(FiltersResources.FilterNotProvided, nameof(Logic.Models.Employee.EmployeeId))}");
 
                 ValidationProblemDetails problemDetails = new(context.ModelState)
                 {
@@ -46,7 +48,7 @@ namespace PrintManager.Application.Filters.Employee
 
             if (employeeService.GetById(employeeId.Value) is null)
             {
-                context.ModelState.AddModelError(nameof(Logic.Models.Employee.EmployeeId), $"{nameof(Logic.Models.Employee)} with id {employeeId} not found.");
+                context.ModelState.AddModelError(nameof(Logic.Models.Employee.EmployeeId), $"{string.Format(FiltersResources.ModelNotFound, nameof(Logic.Models.Employee), employeeId)}");
 
                 ValidationProblemDetails problemDetails = new(context.ModelState)
                 {

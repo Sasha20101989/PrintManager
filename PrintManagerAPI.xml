@@ -38,6 +38,7 @@
             <summary>
             Получение сведений об инсталляции по параметру, позволяющему её уникально идентифицировать
             </summary>
+            <param name="id">Уникальный идентификатор инсталяции</param>
         </member>
         <member name="M:PrintManager.API.Controllers.InstallationController.IndexByBranchName(PrintManager.Application.Interfaces.IInstallationService,PrintManager.Application.Contracts.Installation.GetInstallationRequest)">
             <summary>
@@ -48,6 +49,7 @@
             <summary>
             Удаление записи об инсталляции устройства печати
             </summary>
+            <param name="id">Уникальный идентификатор инсталяции</param>
         </member>
         <member name="T:PrintManager.API.Controllers.JobController">
             <summary>

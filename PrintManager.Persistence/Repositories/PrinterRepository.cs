@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PrintManager.Logic.Models;
 using PrintManager.Logic.Stores;
 using PrintManager.Persistence.Entities;
+using System.Reflection;
 
 namespace PrintManager.Persistence.Repositories;
 
@@ -42,15 +43,16 @@ public class PrinterRepository(PrintingManagementContext context, IMapper mapper
         return mapper.Map<Printer>(printer);
     }
 
-    public async Task<IReadOnlyList<Printer>> GetByPageAsync(int skip, int pageSize, Logic.Enums.ConnectionType? connectionType)
+    public async Task<IReadOnlyList<Printer>> GetByPageAsync(int skip, int pageSize, Logic.Enums.ConnectionTypes? connectionType)
     {
         IQueryable<PrinterEntity> printersQuery = context.Printers
-            .AsNoTracking()
-            .Include(p => p.ConnectionType);
+            .Include(p => p.ConnectionType)
+            .AsNoTracking();
 
         if (connectionType.HasValue)
         {
-            printersQuery = printersQuery.Where(p => p.ConnectionType.ConnectionTypeName == connectionType.ToString());
+            printersQuery = printersQuery
+            .Where(p => p.ConnectionType.ConnectionTypeName == connectionType.ToString());
         }
 
         return await printersQuery

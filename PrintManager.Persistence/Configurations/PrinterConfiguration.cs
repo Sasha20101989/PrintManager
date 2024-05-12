@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using PrintManager.Logic.Enums;
 using PrintManager.Persistence.Entities;
 
 namespace PrintManager.Persistence.Configurations;

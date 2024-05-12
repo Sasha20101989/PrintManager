@@ -22,14 +22,14 @@ namespace PrintManager.Application.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ContractsResources {
+    public class FileResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ContractsResources() {
+        internal FileResources() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace PrintManager.Application.Properties {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PrintManager.Application.Properties.ContractsResources", typeof(ContractsResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PrintManager.Application.Properties.FileResources", typeof(FileResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,74 +61,11 @@ namespace PrintManager.Application.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Branch id is required..
+        ///   Ищет локализованную строку, похожую на File not found..
         /// </summary>
-        public static string RequiredBranchIdErrorMessage {
+        public static string FileErrorNotFound {
             get {
-                return ResourceManager.GetString("RequiredBranchIdErrorMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Branch name is required..
-        /// </summary>
-        public static string RequiredBranchNameErrorMessage {
-            get {
-                return ResourceManager.GetString("RequiredBranchNameErrorMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Default Installation is required..
-        /// </summary>
-        public static string RequiredDefaultInstallationErrorMessage {
-            get {
-                return ResourceManager.GetString("RequiredDefaultInstallationErrorMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Employee id is required..
-        /// </summary>
-        public static string RequiredEmployeeIdErrorMessage {
-            get {
-                return ResourceManager.GetString("RequiredEmployeeIdErrorMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Installation name is required..
-        /// </summary>
-        public static string RequiredInstallationNameErrorMessage {
-            get {
-                return ResourceManager.GetString("RequiredInstallationNameErrorMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Pages printed is required..
-        /// </summary>
-        public static string RequiredPagesPrintedErrorMessage {
-            get {
-                return ResourceManager.GetString("RequiredPagesPrintedErrorMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Printer id is required..
-        /// </summary>
-        public static string RequiredPrinterIdErrorMessage {
-            get {
-                return ResourceManager.GetString("RequiredPrinterIdErrorMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Print job name is required..
-        /// </summary>
-        public static string RequiredPrintJobNameErrorMessage {
-            get {
-                return ResourceManager.GetString("RequiredPrintJobNameErrorMessage", resourceCulture);
+                return ResourceManager.GetString("FileErrorNotFound", resourceCulture);
             }
         }
     }

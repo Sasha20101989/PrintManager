@@ -28,8 +28,8 @@ public class JobService(IJobStore jobStore, IEmployeeService employeeService, IP
         Job newJob = await GenerateAsync(record.PrintJobName, record.EmployeeId.Value, record.PagesPrinted.Value, record.PrinterId.Value);
 
         newJob.StatusId = IsPrintSuccess() ?
-            (int)Logic.Enums.Status.Success :
-            (int)Logic.Enums.Status.Failure;
+            (int)Logic.Enums.Statuses.Success :
+            (int)Logic.Enums.Statuses.Failure;
 
         return await CreateJobAsync(newJob);
     }
@@ -95,14 +95,14 @@ public class JobService(IJobStore jobStore, IEmployeeService employeeService, IP
         await Task.Delay(delayMilliseconds);
 
         generatedJob.StatusId = IsPrintSuccess() ?
-            (int)Logic.Enums.Status.Success :
-            (int)Logic.Enums.Status.Failure;
+            (int)Logic.Enums.Statuses.Success :
+            (int)Logic.Enums.Statuses.Failure;
     }
 
     private bool IsPrintSuccess()
     {
         int result = _random.Next(1, 3);
 
-        return result == (int)Logic.Enums.Status.Success;
+        return result == (int)Logic.Enums.Statuses.Success;
     }
 }

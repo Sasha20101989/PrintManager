@@ -17,7 +17,7 @@ public class PrinterService(IPrinterStore printerStore) : IPrinterService
         return await printerStore.GetByIdAsync(printerId);
     }
 
-    public async Task<IReadOnlyList<Printer>> GetByPageAsync(int ? page, int? pageSize, Logic.Enums.ConnectionType? connectionType)
+    public async Task<IReadOnlyList<Printer>> GetByPageAsync(int ? page, int? pageSize, Logic.Enums.ConnectionTypes? connectionType)
     {
         int pageNumber = page.HasValue && page > 0 ? page.Value : DefaultPaginationValues.PrinterDefaultPage;
         int size = pageSize.HasValue && pageSize > 0 ? pageSize.Value : DefaultPaginationValues.PrinterDefaultPageSize;

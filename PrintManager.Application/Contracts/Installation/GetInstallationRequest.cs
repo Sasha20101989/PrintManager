@@ -1,4 +1,5 @@
 ﻿using PrintManager.Application.DefaultValues;
+using PrintManager.Application.Properties;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -21,7 +22,7 @@ namespace PrintManager.Application.Contracts.Installation
         /// <summary>
         /// Название филиала.
         /// </summary>
-        [Required(ErrorMessage = "Branch name is required.")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(ContractsResources), ErrorMessageResourceName = "RequiredBranchNameErrorMessage")]
         public required string Branch { get; init; } = null!;
     }
 }

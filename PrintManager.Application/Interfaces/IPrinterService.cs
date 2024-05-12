@@ -8,5 +8,5 @@ public interface IPrinterService
 
     Task<Printer?> GetByIdAsync(int printerId);
 
-    Task<IReadOnlyList<Printer>> GetByPageAsync(int? page, int? pageSize, Logic.Enums.ConnectionType? connectionType);
+    Task<IReadOnlyList<Printer>> GetByPageAsync(int? page, int? pageSize, Logic.Enums.ConnectionTypes? connectionType);
 }

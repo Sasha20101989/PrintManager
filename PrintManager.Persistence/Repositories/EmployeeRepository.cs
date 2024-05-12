@@ -42,6 +42,7 @@ public class EmployeeRepository(PrintingManagementContext context, IMapper mappe
     {
         return await context.Employees
             .AsNoTracking()
+            .Include(e => e.Branch)
             .Skip(skip)
             .Take(pageSize)
             .Select(e => mapper.Map<Employee>(e))

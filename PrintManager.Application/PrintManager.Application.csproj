@@ -27,6 +27,16 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ContractsResources.resx</DependentUpon>
     </Compile>
+    <Compile Update="Properties\FileResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>FileResources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\FiltersResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>FiltersResources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +47,14 @@
     <EmbeddedResource Update="Properties\ContractsResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ContractsResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Properties\FileResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FileResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Properties\FiltersResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>FiltersResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

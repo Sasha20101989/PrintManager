@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using PrintManager.Application.Contracts.Job;
 using Microsoft.Extensions.DependencyInjection;
 using PrintManager.Application.Interfaces;
+using PrintManager.Application.Properties;
 
 namespace PrintManager.Application.Filters.Job
 {
@@ -19,7 +20,7 @@ namespace PrintManager.Application.Filters.Job
             {
                 if (file.Count == 0)
                 {
-                    context.ModelState.AddModelError("File", $"File is required.");
+                    context.ModelState.AddModelError("File", FileResources.FileErrorNotFound);
 
                     ValidationProblemDetails problemDetails = new(context.ModelState)
                     {

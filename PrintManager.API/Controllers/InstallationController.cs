@@ -42,6 +42,7 @@ public class InstallationController : ControllerBase
     /// <summary>
     /// Получение сведений об инсталляции по параметру, позволяющему её уникально идентифицировать
     /// </summary>
+    /// <param name="id">Уникальный идентификатор инсталяции</param>
     [HttpGet]
     [Route("{id}")]
     [ProducesResponseType(typeof(Installation), (int)HttpStatusCode.OK)]
@@ -72,6 +73,7 @@ public class InstallationController : ControllerBase
     /// <summary>
     /// Удаление записи об инсталляции устройства печати
     /// </summary>
+    /// <param name="id">Уникальный идентификатор инсталяции</param>
     [HttpDelete("{id}")]
     [ProducesResponseType(typeof(IReadOnlyList<Installation>), (int)HttpStatusCode.NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

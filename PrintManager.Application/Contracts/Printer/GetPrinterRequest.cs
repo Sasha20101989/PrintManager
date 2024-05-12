@@ -12,7 +12,7 @@ public record GetPrinterRequest
     /// <summary>
     /// Тип подключения
     /// </summary>
-    public ConnectionType? ConnectionType { get; init; }
+    public ConnectionTypes? ConnectionType { get; init; }
 
     /// <summary>
     /// Номер страницы

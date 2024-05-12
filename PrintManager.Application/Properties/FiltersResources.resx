@@ -117,28 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="RequiredBranchIdErrorMessage" xml:space="preserve">
-    <value>Branch id is required.</value>
+  <data name="FilterNotProvided" xml:space="preserve">
+    <value>Key {0} not provided in filter.</value>
   </data>
-  <data name="RequiredBranchNameErrorMessage" xml:space="preserve">
-    <value>Branch name is required.</value>
-  </data>
-  <data name="RequiredDefaultInstallationErrorMessage" xml:space="preserve">
-    <value>Default Installation is required.</value>
-  </data>
-  <data name="RequiredEmployeeIdErrorMessage" xml:space="preserve">
-    <value>Employee id is required.</value>
-  </data>
-  <data name="RequiredInstallationNameErrorMessage" xml:space="preserve">
-    <value>Installation name is required.</value>
-  </data>
-  <data name="RequiredPagesPrintedErrorMessage" xml:space="preserve">
-    <value>Pages printed is required.</value>
-  </data>
-  <data name="RequiredPrinterIdErrorMessage" xml:space="preserve">
-    <value>Printer id is required.</value>
-  </data>
-  <data name="RequiredPrintJobNameErrorMessage" xml:space="preserve">
-    <value>Print job name is required.</value>
+  <data name="ModelNotFound" xml:space="preserve">
+    <value>{0} with id {1} not found.</value>
   </data>
 </root>

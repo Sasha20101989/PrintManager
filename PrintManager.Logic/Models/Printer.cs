@@ -1,14 +1,19 @@
-﻿namespace PrintManager.Logic.Models;
+﻿using PrintManager.Logic.Enums;
+using System.Data;
+
+namespace PrintManager.Logic.Models;
 
 public class Printer
 {
-    public int PrinterId { get; private set; }
+    public int PrinterId { get; set; }
 
-    public string? PrinterName { get; private set; }
+    public string? PrinterName { get; set; }
 
-    public int ConnectionTypeId { get; private set; }
+    public string? Macaddress { get; set; }
 
-    public string? Macaddress { get; private set; }
+    public bool DefaultPrinter { get; set; }
 
-    public bool DefaultPrinter { get; private set; }
+    public int ConnectionTypeId { get; set; }
+
+    public ConnectionType ConnectionType { get; set; }
 }

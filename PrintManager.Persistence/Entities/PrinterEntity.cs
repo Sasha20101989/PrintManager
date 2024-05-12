@@ -7,7 +7,7 @@ namespace PrintManager.Persistence.Entities;
 public partial class PrinterEntity
 {
     [Key]
-    [Column("PrinterID")]
+    [Column("PrinterId")]
     public int PrinterId { get; set; }
 
     [StringLength(100)]

@@ -10,5 +10,5 @@ public interface IPrinterStore
 
     Printer? GetById(int printerId);
 
-    Task<IReadOnlyList<Printer>> GetByPageAsync(int skip, int pageSize, Enums.ConnectionType? connectionType);
+    Task<IReadOnlyList<Printer>> GetByPageAsync(int skip, int pageSize, Enums.ConnectionTypes? connectionType);
 }

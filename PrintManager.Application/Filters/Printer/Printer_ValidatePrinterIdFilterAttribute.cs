@@ -5,6 +5,8 @@ using PrintManager.Application.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Http;
 using PrintManager.Application.Contracts.Job;
+using PrintManager.Application.Properties;
+using PrintManager.Logic.Models;
 
 namespace PrintManager.Application.Filters.Printer
 {
@@ -41,7 +43,7 @@ namespace PrintManager.Application.Filters.Printer
 
             if (!printerId.HasValue)
             {
-                context.ModelState.AddModelError(nameof(Logic.Models.Printer.PrinterId), $"{nameof(Logic.Models.Printer.PrinterId)} not provided.");
+                context.ModelState.AddModelError(nameof(Logic.Models.Printer.PrinterId), $"{string.Format(FiltersResources.FilterNotProvided, nameof(Logic.Models.Printer.PrinterId))}");
 
                 ValidationProblemDetails problemDetails = new(context.ModelState)
                 {
@@ -55,7 +57,7 @@ namespace PrintManager.Application.Filters.Printer
 
             if (printerService.GetById(printerId.Value) is null)
             {
-                context.ModelState.AddModelError(nameof(Logic.Models.Printer.PrinterId), $"{nameof(Logic.Models.Printer)} with id {printerId} not found.");
+                context.ModelState.AddModelError(nameof(Logic.Models.Printer.PrinterId), $"{string.Format(FiltersResources.ModelNotFound, nameof(Logic.Models.Printer), printerId)}");
 
                 ValidationProblemDetails problemDetails = new(context.ModelState)
                 {

@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PrintManager.Application.Contracts.Installation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using PrintManager.Application.Properties;
 
 namespace PrintManager.Application.Filters.Branch
 {
@@ -32,7 +33,7 @@ namespace PrintManager.Application.Filters.Branch
 
             if (!branchId.HasValue)
             {
-                context.ModelState.AddModelError(nameof(Logic.Models.Branch.BranchId), $"{nameof(Logic.Models.Branch.BranchId)} not provided.");
+                context.ModelState.AddModelError(nameof(Logic.Models.Branch.BranchId), $"{string.Format(FiltersResources.FilterNotProvided, nameof(Logic.Models.Branch.BranchId))}");
 
                 ValidationProblemDetails problemDetails = new(context.ModelState)
                 {
@@ -46,7 +47,7 @@ namespace PrintManager.Application.Filters.Branch
 
             if (branchService.GetById(branchId.Value) is null)
             {
-                context.ModelState.AddModelError(nameof(Logic.Models.Branch.BranchId), $"{nameof(Logic.Models.Branch)} with id {branchId} not found.");
+                context.ModelState.AddModelError(nameof(Logic.Models.Branch.BranchId), $"{string.Format(FiltersResources.ModelNotFound, nameof(Logic.Models.Branch), branchId)}");
 
                 ValidationProblemDetails problemDetails = new(context.ModelState)
                 {

@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using PrintManager.Application.Interfaces;
+using PrintManager.Application.Properties;
+using PrintManager.Logic.Models;
 
 namespace PrintManager.Application.Filters.Installation
 {
@@ -18,7 +20,7 @@ namespace PrintManager.Application.Filters.Installation
             {
                 if (installationId <= 0)
                 {
-                    context.ModelState.AddModelError(nameof(Logic.Models.Installation.InstallationId), $"{nameof(Logic.Models.Installation.InstallationId)} must be greater than or equal to 1.");
+                    context.ModelState.AddModelError(nameof(Logic.Models.Installation.InstallationId), $"{string.Format(AttributesResources.ErrorMinValueValidationMessage, nameof(Logic.Models.Installation.InstallationId), 1)}");
 
                     ValidationProblemDetails problemDetails = new(context.ModelState)
                     {
@@ -29,7 +31,7 @@ namespace PrintManager.Application.Filters.Installation
                 }
                 else if (installationId is not null && installationService.GetById(installationId.Value) is null)
                 {
-                    context.ModelState.AddModelError(nameof(Logic.Models.Installation.InstallationId), $"{nameof(Logic.Models.Installation)} with id {installationId.Value} not found.");
+                    context.ModelState.AddModelError(nameof(Logic.Models.Installation.InstallationId), $"{string.Format(FiltersResources.ModelNotFound, nameof(Logic.Models.Installation), installationId.Value)}");
 
                     ValidationProblemDetails problemDetails = new(context.ModelState)
                     {

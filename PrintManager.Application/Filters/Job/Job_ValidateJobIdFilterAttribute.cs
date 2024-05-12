@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using PrintManager.Application.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Http;
+using PrintManager.Application.Properties;
+using PrintManager.Logic.Models;
 
 namespace PrintManager.Application.Filters.Job
 {
@@ -18,7 +20,7 @@ namespace PrintManager.Application.Filters.Job
             {
                 if (jobId <= 0)
                 {
-                    context.ModelState.AddModelError(nameof(Logic.Models.Job.JobId), $"{nameof(Logic.Models.Job.JobId)} must be greater than or equal to 1.");
+                    context.ModelState.AddModelError(nameof(Logic.Models.Job.JobId), $"{string.Format(AttributesResources.ErrorMinValueValidationMessage, nameof(Logic.Models.Job.JobId), 1)}");
 
                     ValidationProblemDetails problemDetails = new(context.ModelState)
                     {
@@ -29,7 +31,7 @@ namespace PrintManager.Application.Filters.Job
                 }
                 else if (jobId is not null && jobService.GetById(jobId.Value) is null)
                 {
-                    context.ModelState.AddModelError(nameof(Logic.Models.Job.JobId), $"{nameof(Logic.Models.Job)} with id {jobId.Value} not found.");
+                    context.ModelState.AddModelError(nameof(Logic.Models.Job.JobId), $"{string.Format(FiltersResources.ModelNotFound, nameof(Logic.Models.Job), jobId.Value)}");
 
                     ValidationProblemDetails problemDetails = new(context.ModelState)
                     {

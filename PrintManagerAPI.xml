@@ -9,7 +9,7 @@
             Контроллер для управления филиалами.
             </summary>
         </member>
-        <member name="M:PrintManager.API.Controllers.BranchController.Index(PrintManager.Applpication.Interfaces.IBranchService,PrintManager.Applpication.Contracts.Branch.GetBranchRequest)">
+        <member name="M:PrintManager.API.Controllers.BranchController.Index(PrintManager.Application.Interfaces.IBranchService,PrintManager.Application.Contracts.Branch.GetBranchRequest)">
             <summary>
             Получает список филиалов с возможностью пагинации.
             </summary>
@@ -19,7 +19,7 @@
             Контроллер для управления работниками.
             </summary>
         </member>
-        <member name="M:PrintManager.API.Controllers.EmployeeController.Index(PrintManager.Applpication.Interfaces.IEmployeeService,PrintManager.Applpication.Contracts.Employee.GetEmployeeRequest)">
+        <member name="M:PrintManager.API.Controllers.EmployeeController.Index(PrintManager.Application.Interfaces.IEmployeeService,PrintManager.Application.Contracts.Employee.GetEmployeeRequest)">
             <summary>
             Получение списка работников с возможностью пагинации.
             </summary>
@@ -29,22 +29,22 @@
             Контроллер для управления инсталяциями.
             </summary>
         </member>
-        <member name="M:PrintManager.API.Controllers.InstallationController.Create(PrintManager.Applpication.Interfaces.IInstallationService,PrintManager.Applpication.Contracts.Installation.CreateInstallationRequest)">
+        <member name="M:PrintManager.API.Controllers.InstallationController.Create(PrintManager.Application.Interfaces.IInstallationService,PrintManager.Application.Contracts.Installation.CreateInstallationRequest)">
             <summary>
             Создание инсталяции
             </summary>
         </member>
-        <member name="M:PrintManager.API.Controllers.InstallationController.GetById(PrintManager.Applpication.Interfaces.IInstallationService,System.Int32)">
+        <member name="M:PrintManager.API.Controllers.InstallationController.GetById(PrintManager.Application.Interfaces.IInstallationService,System.Int32)">
             <summary>
             Получение сведений об инсталляции по параметру, позволяющему её уникально идентифицировать
             </summary>
         </member>
-        <member name="M:PrintManager.API.Controllers.InstallationController.IndexByBranchName(PrintManager.Applpication.Interfaces.IInstallationService,PrintManager.Applpication.Contracts.Installation.GetInstallationRequest)">
+        <member name="M:PrintManager.API.Controllers.InstallationController.IndexByBranchName(PrintManager.Application.Interfaces.IInstallationService,PrintManager.Application.Contracts.Installation.GetInstallationRequest)">
             <summary>
             Получение списка всех имеющихся инсталляций с возможностью фильтрации по конкретному филиалу
             </summary>
         </member>
-        <member name="M:PrintManager.API.Controllers.InstallationController.Delete(PrintManager.Applpication.Interfaces.IInstallationService,System.Int32)">
+        <member name="M:PrintManager.API.Controllers.InstallationController.Delete(PrintManager.Application.Interfaces.IInstallationService,System.Int32)">
             <summary>
             Удаление записи об инсталляции устройства печати
             </summary>
@@ -54,12 +54,12 @@
             Контроллер для управления заданиями печати.
             </summary>
         </member>
-        <member name="M:PrintManager.API.Controllers.JobController.Create(PrintManager.Applpication.Interfaces.IJobService,PrintManager.Applpication.Contracts.Job.CreateJobRequest)">
+        <member name="M:PrintManager.API.Controllers.JobController.Create(PrintManager.Application.Interfaces.IJobService,PrintManager.Application.Contracts.Job.CreateJobRequest)">
             <summary>
             Создание задания печати
             </summary>
         </member>
-        <member name="M:PrintManager.API.Controllers.JobController.GetById(PrintManager.Applpication.Interfaces.IJobService,System.Int32)">
+        <member name="M:PrintManager.API.Controllers.JobController.GetById(PrintManager.Application.Interfaces.IJobService,System.Int32)">
             <summary>
             Получение сведений о задании печати по параметру, позволяющему его уникально идентифицировать
             </summary>
@@ -69,7 +69,7 @@
             Контроллер для управления принтерами.
             </summary>
         </member>
-        <member name="M:PrintManager.API.Controllers.PrinterController.Index(PrintManager.Applpication.Interfaces.IPrinterService,PrintManager.Applpication.Contracts.Printer.GetPrinterRequest)">
+        <member name="M:PrintManager.API.Controllers.PrinterController.Index(PrintManager.Application.Interfaces.IPrinterService,PrintManager.Application.Contracts.Printer.GetPrinterRequest)">
             <summary>
             Получение принтеров с возможностью фильтрации по типу и пагинации
             </summary>
@@ -90,22 +90,6 @@
             </summary>
             <param name="context">Объект HttpContext, представляющий текущий запрос и ответ.</param>
             <param name="next">Следующий делегат запроса в цепочке middleware.</param>
-        </member>
-        <member name="T:PrintManager.API.Properties.Resources">
-            <summary>
-              Класс ресурса со строгой типизацией для поиска локализованных строк и т.д.
-            </summary>
-        </member>
-        <member name="P:PrintManager.API.Properties.Resources.ResourceManager">
-            <summary>
-              Возвращает кэшированный экземпляр ResourceManager, использованный этим классом.
-            </summary>
-        </member>
-        <member name="P:PrintManager.API.Properties.Resources.Culture">
-            <summary>
-              Перезаписывает свойство CurrentUICulture текущего потока для всех
-              обращений к ресурсу с помощью этого класса ресурса со строгой типизацией.
-            </summary>
         </member>
     </members>
 </doc>

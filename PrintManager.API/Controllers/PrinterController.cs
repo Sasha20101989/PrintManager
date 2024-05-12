@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PrintManager.Applpication.Contracts.Printer;
-using PrintManager.Applpication.Interfaces;
+using PrintManager.Application.Contracts.Printer;
+using PrintManager.Application.Interfaces;
 using PrintManager.Logic.Models;
 using System.Net;
 

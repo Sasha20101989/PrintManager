@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PrintManager.Applpication.Contracts.Job;
-using PrintManager.Applpication.Filters.Job;
-using PrintManager.Applpication.Interfaces;
-using PrintManager.Applpication.Services;
+using Microsoft.IdentityModel.Tokens;
+using PrintManager.Application.Contracts.Job;
+using PrintManager.Application.Filters.Job;
+using PrintManager.Application.Interfaces;
 using PrintManager.Logic.Models;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 using System.Net;
-using System.Net.Security;
 
 namespace PrintManager.API.Controllers;
 
@@ -69,18 +71,47 @@ public class JobController : ControllerBase
     [FromServices] ICSVService cSVService,
     [FromForm] IFormFileCollection file)
     {
-        if (file == null)
+        if (file.Count == 0)
         {
             return BadRequest("File is empty");
         }
 
-        List<CsvJobData> res = cSVService.ReadCSV<CsvJobData>(file[0].OpenReadStream()).ToList();
+        List<Job> data = cSVService.ReadCSV<CsvJobData>(file[0].OpenReadStream())
+            .Where(ValidateRecord)
+            .Select(CreateJobFromRecord)
+            .ToList();
 
-            //IReadOnlyList<Job> importedJobs = jobService.ImportJobsFromCsvAsync();
+        //List<CsvJobData> data = cSVService.ReadCSV<CsvJobData>(file[0].OpenReadStream())
+        //    .Where(jd =>
+        //    jd.EmployeeId is not null &&
+        //    jd.PrinterId is not null &&
+        //    jd.PagesPrinted is not null &&
+        //    jd.PrintJobName is not null)
+        //    .ToList();
 
-            return Ok(res);
+        //IReadOnlyList<Job> importedJobs = jobService.ImportJobsFromCsvAsync();
+
+        return Ok(data);
 
             //return UnprocessableEntity(ex.Message);
+    }
+
+    private bool ValidateRecord(CsvJobData record)
+    {
+        ValidationContext context = new(record);
+
+        return Validator.TryValidateObject(record, context, null, validateAllProperties: true);
+    }
+
+    private Job CreateJobFromRecord(CsvJobData record)
+    {
+        return new()
+        {
+            PrintJobName = record.PrintJobName,
+            EmployeeId = record.EmployeeId.Value,
+            PrinterId = record.PrinterId.Value,
+            PagesPrinted = record.PagesPrinted.Value,
+        };
     }
 
     private async Task SimulatePrinting()

@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.CookiePolicy;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Converters;
 using PrintManager.API.Extensions;
 using PrintManager.API.Middlewares;
 using PrintManager.Persistence;
 using PrintManager.Persistence.Mappings;
+using System.Globalization;
 
 namespace PrintManager.API
 {
@@ -12,6 +14,8 @@ namespace PrintManager.API
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+
             services.AddControllers().AddNewtonsoftJson(o =>
             {
                 o.SerializerSettings.Converters.Add(new StringEnumConverter());
@@ -47,6 +51,18 @@ namespace PrintManager.API
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            CultureInfo[] supportedCultures =
+            [
+                new CultureInfo("en"),
+            ];
+
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("ru"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            });
 
             app.UseHttpsRedirection();
 

@@ -1,13 +1,13 @@
 ﻿using Microsoft.OpenApi.Models;
 using PrintManager.API.Middlewares;
-using PrintManager.Applpication.Filters.Installation;
-using PrintManager.Applpication.Filters.Branch;
-using PrintManager.Applpication.Interfaces;
-using PrintManager.Applpication.Services;
+using PrintManager.Application.Filters.Installation;
+using PrintManager.Application.Filters.Branch;
+using PrintManager.Application.Interfaces;
+using PrintManager.Application.Services;
 using PrintManager.Logic.Stores;
 using PrintManager.Persistence.Repositories;
-using PrintManager.Applpication.Filters.Printer;
-using PrintManager.Applpication.Filters.Job;
+using PrintManager.Application.Filters.Printer;
+using PrintManager.Application.Filters.Job;
 
 namespace PrintManager.API.Extensions
 {

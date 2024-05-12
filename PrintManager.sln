@@ -3,24 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34607.79
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrintManager.API", "PrintManager.API\PrintManager.API.csproj", "{4B54DB63-6C1C-4A35-A485-80AAB0590CFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintManager.API", "PrintManager.API\PrintManager.API.csproj", "{4B54DB63-6C1C-4A35-A485-80AAB0590CFA}"
 	ProjectSection(ProjectDependencies) = postProject
-		{2678E07E-E6C6-45EC-9CAD-4E60C675F0B6} = {2678E07E-E6C6-45EC-9CAD-4E60C675F0B6}
 		{842DB8E6-7A9A-4729-8A16-CFC519B9C3D5} = {842DB8E6-7A9A-4729-8A16-CFC519B9C3D5}
 		{8E6F9F24-2225-44F0-9C84-0C8EFA90385E} = {8E6F9F24-2225-44F0-9C84-0C8EFA90385E}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrintManager.Persistence", "PrintManager.Persistence\PrintManager.Persistence.csproj", "{8E6F9F24-2225-44F0-9C84-0C8EFA90385E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintManager.Persistence", "PrintManager.Persistence\PrintManager.Persistence.csproj", "{8E6F9F24-2225-44F0-9C84-0C8EFA90385E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{842DB8E6-7A9A-4729-8A16-CFC519B9C3D5} = {842DB8E6-7A9A-4729-8A16-CFC519B9C3D5}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrintManager.Logic", "PrintManager.Logic\PrintManager.Logic.csproj", "{842DB8E6-7A9A-4729-8A16-CFC519B9C3D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintManager.Logic", "PrintManager.Logic\PrintManager.Logic.csproj", "{842DB8E6-7A9A-4729-8A16-CFC519B9C3D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrintManager.Applpication", "PrintManager.Applpication\PrintManager.Applpication.csproj", "{2678E07E-E6C6-45EC-9CAD-4E60C675F0B6}"
-	ProjectSection(ProjectDependencies) = postProject
-		{842DB8E6-7A9A-4729-8A16-CFC519B9C3D5} = {842DB8E6-7A9A-4729-8A16-CFC519B9C3D5}
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintManager.Application", "PrintManager.Application\PrintManager.Application.csproj", "{93036BDE-DDAF-4E42-B36A-5924962A48F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,10 +36,10 @@ Global
 		{842DB8E6-7A9A-4729-8A16-CFC519B9C3D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{842DB8E6-7A9A-4729-8A16-CFC519B9C3D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{842DB8E6-7A9A-4729-8A16-CFC519B9C3D5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2678E07E-E6C6-45EC-9CAD-4E60C675F0B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2678E07E-E6C6-45EC-9CAD-4E60C675F0B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2678E07E-E6C6-45EC-9CAD-4E60C675F0B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2678E07E-E6C6-45EC-9CAD-4E60C675F0B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93036BDE-DDAF-4E42-B36A-5924962A48F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93036BDE-DDAF-4E42-B36A-5924962A48F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93036BDE-DDAF-4E42-B36A-5924962A48F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93036BDE-DDAF-4E42-B36A-5924962A48F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

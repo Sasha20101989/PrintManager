@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PrintManager.Applpication.Contracts.Installation;
-using PrintManager.Applpication.Filters.Branch;
-using PrintManager.Applpication.Filters.Installation;
-using PrintManager.Applpication.Filters.Printer;
-using PrintManager.Applpication.Interfaces;
+using PrintManager.Application.Contracts.Installation;
+using PrintManager.Application.Filters.Branch;
+using PrintManager.Application.Filters.Installation;
+using PrintManager.Application.Filters.Printer;
+using PrintManager.Application.Interfaces;
 using PrintManager.Logic.Models;
 using System.Net;
 

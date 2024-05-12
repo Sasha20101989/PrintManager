@@ -18,6 +18,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintManager.Logic", "Print
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintManager.Application", "PrintManager.Application\PrintManager.Application.csproj", "{93036BDE-DDAF-4E42-B36A-5924962A48F2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrintManager.Application.Test", "PrintManager.Application.Test\PrintManager.Application.Test.csproj", "{F4BFC17A-3AD8-4336-A8C0-46EF948E1FF2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{93036BDE-DDAF-4E42-B36A-5924962A48F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93036BDE-DDAF-4E42-B36A-5924962A48F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93036BDE-DDAF-4E42-B36A-5924962A48F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4BFC17A-3AD8-4336-A8C0-46EF948E1FF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4BFC17A-3AD8-4336-A8C0-46EF948E1FF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4BFC17A-3AD8-4336-A8C0-46EF948E1FF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4BFC17A-3AD8-4336-A8C0-46EF948E1FF2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

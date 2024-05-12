@@ -80,6 +80,53 @@
             Получение принтеров с возможностью фильтрации по типу и пагинации
             </summary>
         </member>
+        <member name="T:PrintManager.API.Extensions.ApiExtension">
+            <summary>
+            Расширения для настройки сервисов приложения.
+            </summary>
+        </member>
+        <member name="M:PrintManager.API.Extensions.ApiExtension.AddServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Добавление сервисов.
+            </summary>
+            <param name="services">Коллекция сервисов.</param>
+            <returns>Коллекция сервисов.</returns>
+        </member>
+        <member name="M:PrintManager.API.Extensions.ApiExtension.AddExceptionHandler(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Добавление обработчика исключений.
+            </summary>
+            <param name="services">Коллекция сервисов.</param>
+            <returns>Коллекция сервисов.</returns>
+        </member>
+        <member name="M:PrintManager.API.Extensions.ApiExtension.AddRepositories(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Добавление репозиториев.
+            </summary>
+            <param name="services">Коллекция сервисов.</param>
+            <returns>Коллекция сервисов.</returns>
+        </member>
+        <member name="M:PrintManager.API.Extensions.ApiExtension.AddCacheServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Добавление сервисов кэширования.
+            </summary>
+            <param name="services">Коллекция сервисов.</param>
+            <returns>Коллекция сервисов.</returns>
+        </member>
+        <member name="M:PrintManager.API.Extensions.ApiExtension.AddFilters(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Добавление фильтров.
+            </summary>
+            <param name="services">Коллекция сервисов.</param>
+            <returns>Коллекция сервисов.</returns>
+        </member>
+        <member name="M:PrintManager.API.Extensions.ApiExtension.AddDocumentation(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Добавление документации Swagger.
+            </summary>
+            <param name="services">Коллекция сервисов.</param>
+            <returns>Коллекция сервисов.</returns>
+        </member>
         <member name="T:PrintManager.API.Middlewares.GlobalExceptionHandlingMiddleware">
             <summary>
             Middleware для обработки глобальных исключений и возврата соответствующего ответа клиенту.
@@ -96,6 +143,47 @@
             </summary>
             <param name="context">Объект HttpContext, представляющий текущий запрос и ответ.</param>
             <param name="next">Следующий делегат запроса в цепочке middleware.</param>
+        </member>
+        <member name="T:PrintManager.API.Program">
+            <summary>
+            Главный класс программы.
+            </summary>
+        </member>
+        <member name="M:PrintManager.API.Program.Main(System.String[])">
+            <summary>
+            Главный метод, запускающий приложение.
+            </summary>
+            <param name="args">Аргументы командной строки.</param>
+        </member>
+        <member name="M:PrintManager.API.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            Метод для создания построителя хоста.
+            </summary>
+            <param name="args">Аргументы командной строки.</param>
+            <returns>Построитель хоста.</returns>
+        </member>
+        <member name="T:PrintManager.API.Startup">
+            <summary>
+            Класс для конфигурации приложения при запуске.
+            </summary>
+        </member>
+        <member name="M:PrintManager.API.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Класс для конфигурации приложения при запуске.
+            </summary>
+        </member>
+        <member name="M:PrintManager.API.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Метод для конфигурации сервисов приложения.
+            </summary>
+            <param name="services">Коллекция сервисов.</param>
+        </member>
+        <member name="M:PrintManager.API.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            Метод для настройки конвейера запросов HTTP.
+            </summary>
+            <param name="app">Построитель приложения.</param>
+            <param name="env">Среда выполнения приложения.</param>
         </member>
     </members>
 </doc>

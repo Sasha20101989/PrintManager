@@ -12,8 +12,16 @@ using PrintManager.Application.Filters.Employee;
 
 namespace PrintManager.API.Extensions;
 
+/// <summary>
+/// Расширения для настройки сервисов приложения.
+/// </summary>
 public static class ApiExtension
 {
+    /// <summary>
+    /// Добавление сервисов.
+    /// </summary>
+    /// <param name="services">Коллекция сервисов.</param>
+    /// <returns>Коллекция сервисов.</returns>
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
         services.AddScoped<IBranchService, BranchService>();
@@ -28,6 +36,11 @@ public static class ApiExtension
         return services;
     }
 
+    /// <summary>
+    /// Добавление обработчика исключений.
+    /// </summary>
+    /// <param name="services">Коллекция сервисов.</param>
+    /// <returns>Коллекция сервисов.</returns>
     public static IServiceCollection AddExceptionHandler(this IServiceCollection services)
     {
         services.AddTransient<GlobalExceptionHandlingMiddleware>();
@@ -35,6 +48,11 @@ public static class ApiExtension
         return services;
     }
 
+    /// <summary>
+    /// Добавление репозиториев.
+    /// </summary>
+    /// <param name="services">Коллекция сервисов.</param>
+    /// <returns>Коллекция сервисов.</returns>
     public static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         services.AddScoped<IBranchStore, BranchRepository>();
@@ -48,6 +66,11 @@ public static class ApiExtension
         return services;
     }
 
+    /// <summary>
+    /// Добавление сервисов кэширования.
+    /// </summary>
+    /// <param name="services">Коллекция сервисов.</param>
+    /// <returns>Коллекция сервисов.</returns>
     public static IServiceCollection AddCacheServices(this IServiceCollection services)
     {
         services.AddSingleton<IInstallationMemoryCache, InstallationMemoryCache>();
@@ -55,6 +78,11 @@ public static class ApiExtension
         return services;
     }
 
+    /// <summary>
+    /// Добавление фильтров.
+    /// </summary>
+    /// <param name="services">Коллекция сервисов.</param>
+    /// <returns>Коллекция сервисов.</returns>
     public static IServiceCollection AddFilters(this IServiceCollection services)
     {
         services.AddScoped<Installation_ValidateInstallationIdFilterAttribute>();
@@ -67,6 +95,11 @@ public static class ApiExtension
         return services;
     }
 
+    /// <summary>
+    /// Добавление документации Swagger.
+    /// </summary>
+    /// <param name="services">Коллекция сервисов.</param>
+    /// <returns>Коллекция сервисов.</returns>
     public static IServiceCollection AddDocumentation(this IServiceCollection services)
     {
         services.AddSwaggerGen(c =>

@@ -10,8 +10,15 @@ using System.Globalization;
 
 namespace PrintManager.API;
 
+/// <summary>
+/// Класс для конфигурации приложения при запуске.
+/// </summary>
 public class Startup(IConfiguration configuration)
 {
+    /// <summary>
+    /// Метод для конфигурации сервисов приложения.
+    /// </summary>
+    /// <param name="services">Коллекция сервисов.</param>
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddLocalization(options => options.ResourcesPath = "Resources");
@@ -44,6 +51,11 @@ public class Startup(IConfiguration configuration)
             });
     }
 
+    /// <summary>
+    /// Метод для настройки конвейера запросов HTTP.
+    /// </summary>
+    /// <param name="app">Построитель приложения.</param>
+    /// <param name="env">Среда выполнения приложения.</param>
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
         if (env.IsDevelopment())

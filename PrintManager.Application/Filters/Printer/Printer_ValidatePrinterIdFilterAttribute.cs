@@ -4,6 +4,7 @@ using PrintManager.Application.Contracts.Installation;
 using PrintManager.Application.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Http;
+using PrintManager.Application.Contracts.Job;
 
 namespace PrintManager.Application.Filters.Printer
 {
@@ -20,13 +21,21 @@ namespace PrintManager.Application.Filters.Printer
                 printerId = value as int?;
             }
 
-            if (!printerId.HasValue && context.ActionArguments.TryGetValue("createInstallationRequest", out object? request))
+            if (!printerId.HasValue && context.ActionArguments.TryGetValue("createInstallationRequest", out object? installationRequest))
             {
-                CreateInstallationRequest? createInstallationRequest = request as CreateInstallationRequest;
+                CreateInstallationRequest? createInstallationRequest = installationRequest as CreateInstallationRequest;
 
                 if (createInstallationRequest != null)
                 {
                     printerId = createInstallationRequest.PrinterId;
+                }
+            }else if (!printerId.HasValue && context.ActionArguments.TryGetValue("createJobRequest", out object? jobRequest))
+            {
+                CreateJobRequest? createJobRequest = jobRequest as CreateJobRequest;
+
+                if (createJobRequest != null)
+                {
+                    printerId = createJobRequest.PrinterId;
                 }
             }
 

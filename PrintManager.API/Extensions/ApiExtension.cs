@@ -8,6 +8,7 @@ using PrintManager.Logic.Stores;
 using PrintManager.Persistence.Repositories;
 using PrintManager.Application.Filters.Printer;
 using PrintManager.Application.Filters.Job;
+using PrintManager.Application.Filters.Employee;
 
 namespace PrintManager.API.Extensions
 {
@@ -61,6 +62,7 @@ namespace PrintManager.API.Extensions
             services.AddScoped<Printer_ValidatePrinterIdFilterAttribute>();
             services.AddScoped<Job_ValidateJobIdFilterAttribute>();
             services.AddScoped<Job_ValidateFileCountFilterAttribute>();
+            services.AddScoped<Employee_ValidateEmployeeIdFilterAttribute>();
 
             return services;
         }

@@ -7,6 +7,11 @@ namespace PrintManager.Application.Services;
 
 public class EmployeeService(IEmployeeStore employeeStore) : IEmployeeService
 {
+    public Employee? GetById(int employeeId)
+    {
+        return employeeStore.GetById(employeeId);
+    }
+
     public async Task<Employee?> GetByIdAsync(int employeeId)
     {
         return await employeeStore.GetByIdAsync(employeeId);

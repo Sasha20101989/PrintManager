@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using PrintManager.Application.Contracts.Job;
 using PrintManager.Application.Filters.Job;
+using PrintManager.Application.Filters.Printer;
+using PrintManager.Application.Filters.Employee;
 using PrintManager.Application.Interfaces;
 using PrintManager.Logic.Models;
 
 using System.Net;
+using Microsoft.Extensions.Localization;
 
 namespace PrintManager.API.Controllers;
 
@@ -20,6 +22,11 @@ public class JobController : ControllerBase
     /// Создание задания печати
     /// </summary>
     [HttpPost]
+    [ProducesResponseType(typeof(Job), (int)HttpStatusCode.Created)]
+    [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ServiceFilter(typeof(Printer_ValidatePrinterIdFilterAttribute))]
+    [ServiceFilter(typeof(Employee_ValidateEmployeeIdFilterAttribute))]
     public async Task<IActionResult> Create(
         [FromServices] IJobService jobService,
         [FromBody] CreateJobRequest createJobRequest)
@@ -63,6 +70,7 @@ public class JobController : ControllerBase
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status422UnprocessableEntity)]
     [ServiceFilter(typeof(Job_ValidateFileCountFilterAttribute))]
     public async Task<IActionResult> ImportJobsFromCsv(
+        [FromServices] IStringLocalizer<JobController> localizer,
     [FromServices] IJobService jobService,
     [FromForm] IFormFileCollection file)
     {
@@ -70,6 +78,6 @@ public class JobController : ControllerBase
 
         await Task.WhenAll(data.Select(async r => await jobService.CreateJobFromRecordAsync(r)));
 
-        return Ok($"{data.Count} print jobs have been imported and saved.");
+        return Ok(localizer["SuccessMessage", data.Count].Value);
     }
 }

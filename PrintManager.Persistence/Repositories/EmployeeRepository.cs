@@ -18,6 +18,16 @@ public class EmployeeRepository(PrintingManagementContext context, IMapper mappe
         return employees;
     }
 
+    public Employee? GetById(int employeeId)
+    {
+        EmployeeEntity? employee =context.Employees
+            .AsNoTracking()
+            .Include(e => e.Branch)
+            .FirstOrDefault(i => i.EmployeeId == employeeId);
+
+        return mapper.Map<Employee>(employee);
+    }
+
     public async Task<Employee?> GetByIdAsync(int employeeId)
     {
         EmployeeEntity? employee = await context.Employees

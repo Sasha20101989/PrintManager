@@ -51,29 +51,6 @@ namespace PrintManager.Application.Test
         }
 
         [Fact]
-        public async Task GetByPageAsync_WithValidParameters_ReturnsListOfBranches()
-        {
-            // Arrange
-            List<Branch> expectedBranches = BranchMockDataGenerator.GetMockBranches();
-
-            Mock<IBranchStore> mockBranchStore = new();
-
-            mockBranchStore.Setup(store => store.GetByPageAsync(It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync(expectedBranches);
-
-            BranchService branchService = new(mockBranchStore.Object);
-
-            int? page = 1;
-
-            int? pageSize = 10;
-
-            // Act
-            IReadOnlyList<Branch> result = await branchService.GetByPageAsync(page, pageSize);
-
-            // Assert
-            Assert.Equal(expectedBranches, result);
-        }
-
-        [Fact]
         public async Task GetByPageAsync_NoPaginationParameters_ReturnsAllBranches()
         {
             // Arrange
@@ -96,6 +73,58 @@ namespace PrintManager.Application.Test
             {
                 Assert.Contains(branch, result);
             }
+        }
+
+        [Fact]
+        public async Task GetByPageAsync_WithPaginationParameters_ReturnsRequestedBranches()
+        {
+            // Arrange
+            List<Branch> expectedBranches = BranchMockDataGenerator.GetMockBranches().Take(2).ToList();
+
+            Mock<IBranchStore> mockBranchStore = new();
+
+            mockBranchStore.Setup(store => store.GetByPageAsync(It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync(expectedBranches);
+
+            BranchService branchService = new(mockBranchStore.Object);
+
+            int page = 1;
+
+            int pageSize = 2;
+
+            // Act
+            IReadOnlyList<Branch> result = await branchService.GetByPageAsync(page, pageSize);
+
+            // Assert
+            Assert.Equal(pageSize, result.Count);
+
+            foreach (var branch in expectedBranches.GetRange((page - 1) * pageSize, pageSize))
+            {
+                Assert.Contains(branch, result);
+            }
+        }
+
+        [Fact]
+        public async Task GetByPageAsync_PageGreaterThanTotalPages_ReturnsEmptyList()
+        {
+            // Arrange
+            Mock<IBranchStore> mockBranchStore = new();
+
+            List<Branch> expectedBranches = [];
+
+            mockBranchStore.Setup(x => x.GetByPageAsync(It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync(expectedBranches);
+
+            BranchService branchService = new(mockBranchStore.Object);
+
+            // Act
+            int page = 100;
+
+            int pageSize = 10;
+
+            IReadOnlyList<Branch> result = await branchService.GetByPageAsync(page, pageSize);
+
+            // Assert
+            Assert.Empty(result);
         }
     }
 }

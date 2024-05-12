@@ -74,7 +74,8 @@ public class InstallationRepository(PrintingManagementContext context, IMapper m
         IQueryable<InstallationEntity> installationsQuery = context.Installations
             .AsNoTracking()
             .Include(p => p.Branch)
-            .Include(p => p.Printer);
+            .Include(b => b.Printer)
+            .ThenInclude(p => p.ConnectionType);
 
         if (!string.IsNullOrWhiteSpace(branchName))
         {
